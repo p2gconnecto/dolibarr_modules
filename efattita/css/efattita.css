@@ -1,0 +1,13 @@
+.terminale td{
+    white-space: normal;
+}
+.efattita_send {
+	display: inline-block;
+}
+.efattita_send::before {
+	content: url('/custom/efattita/img/object_efattita.png');
+	display: block;
+	transform: scale(.5);
+	transform-origin: bottom left;
+	margin-top: -17px;
+}

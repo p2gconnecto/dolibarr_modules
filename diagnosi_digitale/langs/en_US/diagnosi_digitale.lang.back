@@ -1,0 +1,42 @@
+# Translation file
+
+#
+# Generic
+#
+
+# Module label 'ModuleDiagnosi_DigitaleName'
+ModuleDiagnosi_DigitaleName = Diagnosi_Digitale
+# Module description 'ModuleDiagnosi_DigitaleDesc'
+ModuleDiagnosi_DigitaleDesc = Diagnosi_Digitale description
+
+#
+# Admin page
+#
+Diagnosi_DigitaleSetup = Diagnosi_Digitale setup
+Settings = Settings
+Diagnosi_DigitaleSetupPage = Diagnosi_Digitale setup page
+NewSection=New section
+DIAGNOSI_DIGITALE_MYPARAM1 = My param 1
+DIAGNOSI_DIGITALE_MYPARAM1Tooltip = My param 1 tooltip
+DIAGNOSI_DIGITALE_MYPARAM2=My param 2
+DIAGNOSI_DIGITALE_MYPARAM2Tooltip=My param 2 tooltip
+
+
+#
+# About page
+#
+About = About
+Diagnosi_DigitaleAbout = About Diagnosi_Digitale
+Diagnosi_DigitaleAboutPage = Diagnosi_Digitale about page
+
+#
+# Sample page
+#
+Diagnosi_DigitaleArea = Home Diagnosi_Digitale
+MyPageName = My page name
+
+#
+# Sample widget
+#
+MyWidget = My widget
+MyWidgetDescription = My widget description

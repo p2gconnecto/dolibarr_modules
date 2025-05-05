@@ -1,0 +1,63 @@
+# Copyright (C) 2020 Linx srls
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#
+# Generic
+#
+ArubaSDI = Canale ArubaSDI
+ArubaSDIDescription = Interfaccia per l'invio e la ricezione della fattura elettronica tramite canale ArubaSDI
+CheckResults = Controllo esiti
+SENT = Inviata
+NOT_SENT = Non inviata
+ACCEPTED = Accettata
+DELIVERED = Consegnata
+UNDELIVERED = Mancata consegna
+REJECTED = Rifiutata
+
+#
+# Admin page
+#
+Settings = Settings
+demoMode=Modalità demo
+demoModeTooltip=Utilizza la modalità demo per i test sul canale. La modalità demo è attiva solo su richiesta
+NotifySubscription = Collegamento al server delle notifiche
+Notices = Notifiche
+ArubaSDISetup = Impostazioni di connessione al canale di Fatturazione Elettrinca Aruba
+NotificheArubaUserNotFound = Utente NorificheAruba non trovato
+NotificheArubaUserCreated =  Utente NorificheAruba creato
+#
+# Import
+#
+eFattITAImport = Importazione Fattura Elettronica
+eFattITAImportDescription = Qui è possibile importare una fattura xml. E' in grado di gestire file mutifattura. Se il fornitore, identificato tramite partita iva, non viene trovaro in anagrafica, viene automaticamente creato. Le linee di fattura vengono collegate direttamente ai prodotti se corrisponde il codice prodotto (es. EAN-12345).<br>Sono supportati file xml, con o senza firma digitale.
+fileNotLoaded=Non è stato selezionato alcun file
+controlloFattureDescription=Qui è possibile controllare mese per mese che le fatture passive siano state regolarmente registrate
+invoiceDownloaded=fattura scaricata
+invoicesDownloaded=fatture scaricate
+UnableToObtainToken=Non è stato possibile ottenere un token di autorizzazione
+
+#
+# Facture
+#
+
+SendToSdi= Invia a SDI
+confirmSendToSDI = Vuoi inviare la fattura al Sistema di Intercambio?
+invoiceSentToSDI_short = La fattura è stata inviata
+invoiceSentToSDI_long = La fattura è stata inviata con esito
+StampNotTotalized = Bollo non totalizzato
+
+#ReadCustomerInvoices
+#Create/UpdateCustomerInvoices
+#DeleteCustomerInvoices

@@ -1,0 +1,82 @@
+# Copyright (C) 2018 SuperAdmin
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#
+# Generic
+#
+
+# Module label 'ModuleeFattITAName'
+ModuleeFattITAName = Fatturazione italiana smart
+# Module description 'ModuleeFattITADesc'
+ModuleeFattITADesc = Modulo per la fatturazione italiana
+
+#
+# Admin page
+#
+EFATTITA_CHECK_UPDATES = Controlla aggiornamenti
+EFATTITA_CHECK_UPDATESTooltip = Controlla aggiornamenti e dà un avviso nella pagina dell'elenco dei moduli
+eFattITASetup = Impostazioni per la fatturazione italiana
+Settings = Settings
+eFattITASetupPage = Impostazioni per la fatturazione italiana
+CodiceUnivocoTooltip = Il codice identificativo della propria società o del proprio intermediario presso lo SDI
+CausalePagamentoTooltip = Causale del pagamento (quella del Mod CU)
+endpointLoginTooltip = Login presso ESI
+endpointPasswordTooltip = Password presso ESI
+RegimeFiscaleTooltip = Regime Fiscale
+TipoCassaTooltip=Cassa previdenziale
+CodiceArticoloTooltip=Codice articolo in aggiunta al codice a barre
+CodiceArticoloTipoTooltip=Tipo del codice articolo
+RitenutaSuCassaPrevidenziale=Ritenuta su cassa previdenziale
+IvaSuCassaPrevidenziale=Iva su cassa previdenziale
+RitenutaSuCassaPrevidenzialeTooltip=La ritenuta su cassa previdenziale è applicabile da alcune categorie di professionisti
+IvaSuCassaPrevidenzialeTooltip=L'Iva su cassa previdenziale è obbligatoria tranne per alcune categorie di professionisti
+ESPORTATORI_ABITUALI=Esportatori abituali
+ESPORTATORI_ABITUALITooltip=Abilita le funzioni per gli Esportatori abituali:<br>- data intento<br>- protocollo intento<br>- Valore intento (viene calcolata la rimanenza al del valore dell'intento)
+RiferimentoAmministrazioneTooltip = Abilita il campo nella scheda fattura. Codice identificativo del cedente / prestatore ai fini amministrativo-contabili
+TipoRitenutaTooltip = Tipologia della ritenuta
+NATURA_PER_RIGA = Natura per riga
+NATURA_PER_RIGATooltip = Dà la possibilita di impostare separatamente la Natura per ogni riga di fattura
+NaturaCassaTooltip = Natura se l'iva sulla cassa previdenziale non è applicata
+# About page
+#
+About = About
+eFattITAAbout = Informazioni sul modulo Fatturazione Elettronica
+eFattITAAboutPage = Fatturazione Elettronica
+
+#
+# Import
+#
+eFattITAImport = Importazione Fattura Elettronica
+eFattITAImportDescription = Qui è possibile importare una fattura xml, attiva o passiva.<br> E' in grado di gestire file mutifattura.<br>Se il fornitore o cliente, identificato tramite partita iva, non viene trovaro in anagrafica, viene automaticamente creato.<br>Le linee di fattura vengono collegate direttamente ai prodotti se corrisponde il codice prodotto (es. EAN-12345).<br>Sono supportati file xml e p7m.
+fileNotLoaded = Non è stato selezionato alcun file
+controlloFattureDescription = Qui è possibile controllare mese per mese che le fatture passive siano state regolarmente registrate
+invoiceDownloaded = fattura scaricata
+invoicesDownloaded = fatture scaricate
+#
+# Facture
+#
+
+SendToSdi = Invia a SDI
+confirmSendToSDI = Vuoi inviare la fattura al Sistema di Intercambio?
+invoiceSentToSDI_short = La fattura è stata inviata
+invoiceSentToSDI_long = La fattura è stata inviata con esito
+StampNotTotalized = Bollo non totalizzato
+GenerateXml = Genera xml
+EFATTITA_DEFAULT_LAST_FIELDS = Campi autocompilati
+EFATTITA_DEFAULT_LAST_EXTRAFIELDS = Campi extra autocompilati
+EFATTITA_DEFAULT_LAST_FIELDSTooltip = Campi della fattura, che verranno compilati automaticamente, sulla base dell'ultima fattura inviata allo stesso terzo. <br>Default: <br>fk_cond_reglement, fk_mode_reglement, fk_account
+EFATTITA_DEFAULT_LAST_EXTRAFIELDSTooltip = Campi extra della fattura, che verranno compilati automaticamente, sulla base dell'ultima fattura inviata allo stesso terzo. <br>Default: <br>bollo, tipo_documento, condizioni_pagamento, modalita_pagamento, esigibilita_iva, natura, riferimento_normativo, protocollo_intento
+CAUSALE_FATTURA = Campo causale in fattura
+CAUSALE_FATTURATooltip = Il campo causale in fattura è il nodo 2.1.1.11 all'interno di DatiGeneraliDocumento

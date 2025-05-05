@@ -1,0 +1,28 @@
+ActionsESI	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^class ActionsESI$/;"	class	line:2
+printFieldListValue	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^	function printFieldListValue(&$parameters, $object, $action, $hookmanager)$/;"	function	line:13
+link	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^				$link = dol_buildpath('\/compta\/fature.php?rowid=1',1);$/;"	variable	line:20
+stati	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^					$stati=array('NOT_SENT', 'REJECTED', 'SENT', 'ACCEPTED', 'UNDELIVERED', 'DELIVERED');$/;"	variable	line:22
+stati_color	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^					$stati_color=array(0,8,2,2,4,4);$/;"	variable	line:24
+printFieldListTitle	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^	function printFieldListTitle($parameters, $object, $action, $hookmanager)$/;"	function	line:34
+printFieldListOption	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^	function printFieldListOption($parameters, $object, $action, $hookmanager)$/;"	function	line:47
+filter	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^		$filter = GETPOST('search_options_esito', 'int');$/;"	variable	line:50
+doActions	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^	function doActions($parameters, $object, $action, $hookmanager){$/;"	function	line:68
+filter	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^		$filter = GETPOST('search_options_esito', 'int');$/;"	variable	line:70
+confirm	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^		$confirm = GETPOST('confirm', 'alpha');$/;"	variable	line:71
+objectref	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^					$objectref = dol_sanitizeFileName($object->ref);$/;"	variable	line:81
+dir	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^		    		$dir = $conf->facture->dir_output . "\/" . $objectref;$/;"	variable	line:82
+filename	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^					$filename = $mysoc->country_code . preg_replace("\/\\D\/", '', $mysoc->tva_intra) .'_'.  strtoupper(base_convert($object->id,10,36)) . ".xml";$/;"	variable	line:83
+file	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^					$file = $dir .'\/'. $filename;$/;"	variable	line:84
+fattura_xml	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^					$fattura_xml = simplexml_load_file($file);$/;"	variable	line:95
+client	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^					$client = new SoapClient('https:\/\/www.extremesoftware-applications.cloud\/esi\/Services\/EsiInviaFattura.asmx?wsdl', array("trace" => 1, "exception" => 0));$/;"	variable	line:108
+response	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^					$response = $client->InviaFatturaXML($/;"	variable	line:109
+trigger_name	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^							$trigger_name='BILL_SENTBYMAIL';$/;"	variable	line:141
+interface	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^							$interface=new Interfaces($db);$/;"	variable	line:144
+result	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^							$result=$interface->run_triggers($trigger_name,$object,$user,$langs,$conf);$/;"	variable	line:145
+addMoreActionsButtons	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^	function addMoreActionsButtons($parameters, $object, $action, $hookmanager){$/;"	function	line:157
+html	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^			$html ='<div class="titre inline-block">Trasmissione:<\/div>';$/;"	variable	line:161
+client	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^				$client = new SoapClient('https:\/\/www.extremesoftware-applications.cloud\/esi\/Services\/EsiInviaFattura.asmx?wsdl', array("trace" => 1, "exception" => 0));$/;"	variable	line:163
+response	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^				$response = $client->LeggiEsiti($/;"	variable	line:164
+formConfirm	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^	function formConfirm($parameters, $object, $action){$/;"	function	line:226
+form	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^		$form = new Form($db);$/;"	variable	line:228
+formconfirm	/home/michele/docker/semplifica/repo/ESI/esi/class/actions_esi.class.php	/^			$formconfirm = $form->formconfirm($_SERVER['PHP_SELF'] . '?facid=' . $object->id, $langs->trans('SendToSDI'), $langs->trans('confirmSendToSDI'), 'confirm_sendToSDI', '', "yes", 2);$/;"	variable	line:231

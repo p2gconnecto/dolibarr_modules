@@ -1,0 +1,47 @@
+# =========================
+# Diagnosi Digitale - Traduzioni in italiano
+# =========================
+
+DiagnosiDigitale=Diagnosi Digitale
+DiagnosiDigitali=Diagnosi Digitali
+ElencoDiagnosiDigitali=Elenco Diagnosi Digitali
+ModuleSetup=Configurazione modulo
+DefaultTagFilter=Tag filtro predefinito
+SetupSaved=Configurazione salvata con successo
+Parameters=Parametri
+Save=Salva
+Edit=Modifica
+
+# Campi (devono corrispondere alle label dei campi nel file PHP)
+Nome Azienda=Nome Azienda
+Ragione Sociale=Ragione Sociale
+Nome Referente=Nome Referente
+Ruolo Referente=Ruolo Referente
+Data Compilazione=Data Compilazione
+Oggetto valutazione=Oggetto della valutazione
+Aree coinvolte=Aree coinvolte
+Aspetti osservati=Aspetti osservati
+Tipologia giudizio=Tipologia di giudizio
+Strumenti utilizzati=Strumenti utilizzati
+Assunzioni benefici=Assunzioni sui benefici
+Settore di riferimento=Settore di riferimento
+Numero dipendenti=Numero di dipendenti
+Fatturato annuo=Fatturato annuo
+Ambizioni di crescita=Ambizioni di crescita
+Prodotti o servizi=Prodotti o servizi
+Val. IT=Valutazione Infrastruttura IT
+Val. Doc=Valutazione Gestione Documentale
+Val. Vendite=Valutazione Digitalizzazione vendite/servizi
+Val. Automazione=Valutazione Automazione
+Val. Sicurezza=Valutazione Sicurezza IT
+Punti di forza=Punti di forza
+Debolezze=Debolezze
+Opportunità=Opportunità
+Minacce=Minacce
+Obiettivi=Obiettivi dell’azienda
+Budget disponibile=Budget disponibile
+Cofinanziamenti=Cofinanziamenti disponibili
+Progetti già gestiti=Progetti digitali già gestiti
+Nome referente digitale=Nome referente digitale
+Ruolo referente digitale=Ruolo referente digitale
+Capacità utilizzo strumenti=Capacità di utilizzo strumenti digitali

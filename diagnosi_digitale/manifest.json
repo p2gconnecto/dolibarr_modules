@@ -1,0 +1,11 @@
+{
+    "name": "Diagnosi Digitale",
+    "short_name": "DiagnosiDig",
+    "start_url": "/custom/diagnosi_digitale/",
+    "id": "/custom/diagnosi_digitale/",
+    "scope": "/custom/diagnosi_digitale/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": []
+}

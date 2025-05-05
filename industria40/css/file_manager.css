@@ -1,0 +1,386 @@
+/**
+ * Styles for the Industria40 File Manager
+ */
+
+/* Container styles */
+#filePreview {
+    margin-top: 20px;
+}
+
+.zoom-container {
+    position: relative;
+    overflow: visible;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.file-preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 180px;
+    height: 300px;
+}
+
+.file-preview-container .filename {
+    display: none;
+}
+
+.preview-image {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+.icon-container {
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}
+
+/* Zoom effects */
+.zoom-container img,
+.zoom-container .pdf-thumbnail,
+.zoom-container .file-icon {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1;
+    position: relative;
+    cursor: zoom-in;
+}
+
+.zoom-container:hover img,
+.zoom-container:hover .pdf-thumbnail,
+.zoom-container:hover .file-icon {
+    transform: scale(3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    z-index: 100;
+}
+
+/* Tag styles */
+.tag-dropdown {
+    margin-top: 10px;
+    width: 100%;
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.tag-form {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.tag-label {
+    display: block;
+    font-size: 0.9em;
+    margin-bottom: 3px;
+    color: #444;
+}
+
+.tag-badge {
+    display: inline-block;
+    background-color: #2c5987;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+/* Description styles */
+.description-column {
+    width: 250px;
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.description-text {
+    font-size: 0.9em;
+    color: #555;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+.generate-desc-btn {
+    font-size: 0.8em;
+    padding: 3px 8px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.generate-desc-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* OCR text styles */
+.ocr-text-column {
+    width: 300px;
+    max-width: 300px;
+}
+
+.ocr-preview {
+    max-height: 100px;
+    overflow-y: auto;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.ocr-textarea {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* AI suggestions styles */
+.suggestions-container {
+    font-size: 0.85em;
+    background-color: #f0f7ff;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 8px;
+    border-top: 1px solid #eee;
+    padding-top: 5px;
+}
+
+.suggestion-label {
+    color: #666;
+}
+
+.suggestion-value {
+    font-weight: bold;
+    color: #2c5987;
+}
+
+.use-suggestion {
+    background-color: #e1e9f2;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 1px 5px;
+    cursor: pointer;
+    font-size: 0.85em;
+}
+
+.use-suggestion:hover {
+    background-color: #d0dbe8;
+}
+
+/* AI suggestions styles */
+.ai-suggestions {
+    background-color: #f0f7ff;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 0.9em;
+    border-left: 3px solid #4b9fe1;
+}
+
+.suggested-tag, .suggested-name {
+    margin-bottom: 5px;
+}
+
+.suggestion-label {
+    color: #555;
+    font-weight: normal;
+}
+
+.suggestion-value {
+    color: #2c5987;
+    font-weight: bold;
+}
+
+.use-suggestion {
+    background-color: #e6f2ff;
+    border: 1px solid #b8d6f8;
+    border-radius: 3px;
+    padding: 1px 5px;
+    cursor: pointer;
+    font-size: 0.85em;
+    margin-left: 5px;
+}
+
+.use-suggestion:hover {
+    background-color: #c9e0f7;
+}
+
+/* Hide .txt files in listings */
+tr[data-file-ext="txt"] {
+    display: none;
+}
+
+/* Upload form styles */
+.upload-container {
+    margin-bottom: 10px;
+}
+
+.selectedfileinfo {
+    margin-top: 5px;
+    color: #2c5987;
+}
+
+/* Table styles */
+#fileTable {
+    width: 100%;
+}
+
+/* Action buttons */
+.button {
+    margin: 2px;
+}
+
+.button-delete {
+    background-color: #f44336;
+    color: white;
+}
+
+.button-delete:hover {
+    background-color: #e53935;
+}
+
+/* File info */
+.filename-container {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .file-preview-container {
+        width: 140px;
+        height: 210px;
+    }
+
+    .description-column,
+    .ocr-text-column {
+        width: 200px;
+        max-width: 200px;
+    }
+}
+
+/* Status indicator for processed files */
+.file-processed {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+    line-height: 12px;
+    text-align: center;
+    z-index: 10;
+}
+
+/* Tooltip for indicating file status */
+.file-status-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.file-status-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 11px;
+}
+
+.file-status-tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Stili per l'icona del cestino */
+.delete-icon {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    color: #e74c3c;
+    transition: all 0.2s ease;
+    text-align: center;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+}
+
+.delete-icon:hover {
+    background-color: #e74c3c;
+    color: white;
+    transform: scale(1.1);
+}
+
+.button-delete-all {
+    background-color: #f5f5f5;
+    border: 1px solid #dddddd;
+    color: #e74c3c;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.button-delete-all:hover {
+    background-color: #e74c3c;
+    color: white;
+    border-color: #e74c3c;
+}
+
+/* Stili per la spunta di conferma del nuovo nome */
+.confirm-rename {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 8px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    color: white;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.confirm-rename:hover {
+    transform: scale(1.1);
+    background-color: #3e8e41;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.rename-container {
+    display: flex;
+    align-items: center;
+}
+
+.confirm-rename i {
+    font-size: 14px;
+}

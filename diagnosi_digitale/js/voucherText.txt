@@ -1,0 +1,502 @@
+                                                                                      Allegato C
+
+
+
+
+                                                     DIAGNOSI DIGITALE
+
+                                                                                      Spettabile
+                                                                                      Regione Calabria
+                                                                                      Dipartimento Transizione Digitale ed
+                                                                                      Attività Strategiche
+
+
+
+Oggetto: Diagnosi Digitale a corredo della Domanda (solo ex ante) o della richiesta di erogazione (completa) relativa al
+          Progetto presentato dalla PMI e approvato a valere sull’Avviso in oggetto e identificato con il n. (numero di
+          protocollo), CUP (codice CUP) e COR (codice COR).
+
+ Il/La sottoscritto/a            (nome e cognome)
+ nato/a a           (Stato, Comune)                                                                il   (gg/mm/aaaa)
+ residente in           (Stato, CAP, Provincia, Comune, Indirizzo)
+ codice fiscale
+ Partita IVA
+ in qualità di Innovation Manager incaricato di redigere la Diagnosi Digitale sia ex ante che ex post
+
+                                                          DICHIARA
+                             ai sensi degli artt. 46 e 47 del D.P.R. 445 del 28/12/2000,
+ consapevole delle sanzioni penali, nel caso di dichiarazioni non veritiere e falsità negli atti, richiamate dall’art. 76,
+   consapevole altresì che, nel caso di dichiarazioni non veritiere e falsità negli atti, il dichiarante sopra indicato
+                         decadrà dai benefici per i quali la stessa dichiarazione è rilasciata
+a. di essere in possesso degli specifici requisiti previsti per l’incarico ed in particolare di essere:
+                  un Innovation Manager
+                  uno Specialista dell’Innovazione
+                  un Tecnico dell’Innovazione
+                  professionista indipendente terzo rispetto all’impresa beneficiaria che eroga la propria
+                  attività nell’ambito del DIH – Digital Innovation Hub
+
+
+     la cui figura professionale è certificata ai sensi della norma UNI 11814 dall’Organismo di certificazione del
+     personale (denominazione legale dell’Organismo) accreditato da ACCREDIA in accordo alla norma ISO/IEC
+     17024 per la specifica norma UNI 11814
+
+            ☐      come riscontrabile direttamente dal sito ACCREDIA (pagina Banche Dati ~ Accredia - Figure
+                   professionali certificate)
+            ☐      come riscontrabile da documentazione allegata e conforme all’originale
+
+b. che sussistono i requisiti di indipendenza ed obiettività di cui all’art. 10 del D. Lgs. n.39 del 2010 e ss.mm.ii, in
+   particolare di:
+    - non essere coinvolto nella realizzazione delle attività oggetto della presente diagnosi;
+       -     non trarre benefici diretti dall'accettazione dell’incarico diversi dal compenso pattuito per il rilascio della
+             presente Diagnosi Digitale;
+       -     non avere un rapporto stretto con una persona che rappresenta il Beneficiario;
+       -     non essere un dirigente, un dipendente, un fiduciario o un partner del Beneficiario;
+       -     di essere indipendente e terzo rispetto al fornitore del servizio/prodotto reso, di cui alla Diagnosi ex post;
+       -     non trovarsi in un'altra situazione che compromette la sua indipendenza o la sua capacità di predisporre la
+             Diagnosi Digitale in modo indipendente;
+       -     di non trovarsi in alcuna situazione di incompatibilità, sia di diritto che di fatto, nonché in situazioni di conflitto,
+             anche potenziale, d’interessi che pregiudichino l’esercizio imparziale delle funzioni attribuite.
+
+c. che la Diagnosi Digitale non è oggetto di altro finanziamento pubblico anche indiretto
+
+
+                                                        E INOLTRE DICHIARA
+-     di essere consapevole che l’articolo 264 comma 2, lett. a) del D.L. 19 maggio 2020, n. 34 ha modificato, tra l’altro,
+      gli articoli 75 e 76 del D.P.R. n. 445/2000, prevedendo in particolare che “La dichiarazione mendace comporta, altresì,
+      la revoca degli eventuali benefici già erogati nonché il divieto di accesso a contributi, finanziamenti e agevolazioni
+      per un periodo di 2 anni decorrenti da quando l'amministrazione ha adottato l'atto di decadenza” e che “la sanzione
+      ordinariamente prevista dal codice penale è aumentata da un terzo alla metà”;
+-     di impegnarsi a dare tempestiva comunicazione in caso intervengano eventi che rendano mendaci le dichiarazioni
+      rese;
+-     di aver preso visione della informativa ai sensi degli artt. 13 e 14 del Reg. (UE) 2016/679 in materia di protezione dei
+      dati personali
+
+                               TUTTO CIÒ PREMESSO SI RENDE LA SEGUENTE DIAGNOSI DIGITALE
+
+
+                                                 Sezione 1: Anagrafica del progetto
+    Ragione sociale PMI oggetto della Diagnosi
+                                                                                                         (Stato, CAP/ZIP code,
+    Sede o Sedi Operative interessate                                                                    Provincia, Comune,
+                                                                                                         Indirizzo)
+                                                                                                         (Piccola o Media
+    Dimensione della PMI Beneficiaria
+                                                                                                         Impresa)
+    Interventi (rif. articolo 1 e appendice 4 dell’Avviso) previsti dal Progetto                                Contributo
+    A. Digital Workplace                                               Numero
+    B. Digital Commerce & Engagement
+    C.1 Cloud Computing - Application Server
+    C.2 Cloud Computing - Database Server
+    C.3 Cloud Computing - Web Server
+    C.4 Cloud Computing - Database Back Up
+    D. Cyber Security
+    Totale
+                                            Sezione 2: Approccio metodologico
+Descrivere sinteticamente in questo campo il criterio utilizzato per la redazione della diagnosi digitale, sottolineando
+l’oggetto della valutazione (es. strutture e/o processi aziendali), gli aspetti osservati (es. iterazioni, tempi, efficacia
+ecc.) e le modalità di misurazione del giudizio/valutazione (es. descrivere se sono stati individuati elementi di
+valutazione sintetica attraverso dei giudizi qualitativi, quantitativi o altre modalità ritenute efficaci). L’approccio
+metodologico individuato è unico, esso deve essere adottato nella compilazione EX-ANTE della diagnosi digitale e
+deve necessariamente essere mantenuto in sede di ANALISI EX-POST.
+Gli interventi che vengono individuati devono qualificare gli obiettivi attesi in termini di benefici quantitativi e
+qualitativi associati alle categorie di valore di cui sopra, aiutando l’azienda a valutare coerentemente agli investimenti
+il loro ritorno economico, sulla base di situazioni di riferimento similari osservate dagli esperti.
+È infine necessario argomentare con le assunzioni sulla base delle quali sono state sviluppate le eventuali previsioni
+di costi e benefici.
+
+
+                                         Sezione 3: Analisi del contesto aziendale
+                                                 ANALISI EX-ANTE                               ANALISI EX-POST
+Settore industriale di
+                                      Descrivere in questo campo lo specifico settore di riferimento.
+riferimento
+Dimensioni attuali e ambizioni
+                                      Descrivere in questo campo dimensioni e ambizioni di crescita dell’azienda.
+di crescita dell’azienda
+Caratteristiche dei prodotti /
+servizi forniti (es., turistici,      Descrivere in questo campo le caratteristiche specifiche dei prodotti/servizi offerti.
+artigianali, tecnici)
+                                                                                   Descrivere in questo campo il giudizio
+                                      Descrivere in questo campo il giudizio       sintetico         che         rappresenti
+                                      sintetico        che         rappresenti     complessivamente il grado di maturità
+                                      complessivamente il grado di maturità        digitale dell’impresa successivamente
+                                      digitale dell’impresa evidenziandone         alla     realizzazione     dell’intervento
+Maturità digitale dell’impresa
+                                      punti di forza, di debolezza, le possibili   evidenziando in particolare, rispetto alle
+                                      opportunutà che si possono prospettare       azioni intraprese, l’impatto migliorativo
+                                      e le minacce da affrontare.                  rilevabile rispetto ai punti di debolazza
+                                                                                   precedentemente prospettati e le
+                                                                                   minacce mitigate.
+Obiettivi dell’azienda (es.,
+                                      Descrivere in questo campo la specifica      Descrivere in questo campo la specifica
+crescita presenza sul mercato,
+                                      caratteristica allo stato EX-ANTE (prima     caratteristica allo stato EX-POST (dopo
+efficienza           operativa,
+                                      dell’intervento).                            l’intervento).
+espansione geografica)
+                                      Descrivere in questo campo la specifica      Descrivere in questo campo la specifica
+Capacità di investimento
+                                      caratteristica allo stato EX-ANTE (prima     caratteristica allo stato EX-POST (dopo
+dell’azienda
+                                      dell’intervento).                            l’intervento).
+                                      Descrivere in questo campo la specifica      Descrivere in questo campo la specifica
+Capacità di gestione della
+                                      caratteristica allo stato EX-ANTE (prima     caratteristica allo stato EX-POST (dopo
+trasformazione digitale.
+                                      dell’intervento).                            l’intervento).
+
+                                       Sezione 4: Analisi per Tipologia di Intervento
+                                                      ANALISI EX-ANTE                           ANALISI EX-POST
+                                     A Digital Workplace (postazioni di lavoro digitale)
+                                              MAPPATURA DELLE DOTAZIONI
+                                   (descrizione e composizone del portafoglio applicativo)
+                                       Sezione 4: Analisi per Tipologia di Intervento
+                                                         ANALISI EX-ANTE                       ANALISI EX-POST
+                                              Indicare il numero di postazioni di    Indicare il numero di postazioni
+Software di produttività personale (es.       lavoro digitali che posseggono         aggiuntive      che     posseggono
+suite Office, GSuite, ecc.) inclusivi di e-   applicazioni che rientrano in questa   applicazioni che rientrano in questa
+mail aziendali integrate nel flusso di        categoria e la tipologia di software   categoria.
+lavoro                                        utilizzato.                            Evidenziare, inoltre, le postazioni
+                                                                                     che hanno ricevuto un “upgrade”.
+                                              Indicare il numero di postazioni di    Indicare il numero di postazioni
+                                              lavoro digitali che posseggono         aggiuntive      che     posseggono
+Altri software di utilizzo personale –
+                                              applicazioni che rientrano in questa   applicazioni che rientrano in quetsa
+quali antivirus personali o software di
+                                              categoria e la tipologia di software   categoria.
+utilità di sistema
+                                              utilizzato.                            Evidenziare, inoltre, le postazioni
+                                                                                     che hanno ricevuto un “upgrade”.
+                                              Indicare il numero di postazioni di    Indicare il numero di postazioni
+                                              lavoro digitali che posseggono         aggiuntive      che     posseggono
+Software       di      comunicazione,         applicazioni che rientrano in questa   applicazioni che rientrano in quetsa
+collaborazione e video conferenze             categoria e la tipologia di software   categoria.
+                                              utilizzato.                            Evidenziare, inoltre, le postazioni
+                                                                                     che hanno ricevuto un “upgrade”.
+                                              Indicare il numero di postazioni di    Indicare il numero di postazioni
+                                              lavoro digitali che posseggono         aggiuntive      che     posseggono
+Software per l’archiviazione e la             applicazioni che rientrano in questa   applicazioni che rientrano in quetsa
+gestione documentale in cloud                 categoria e la tipologia di software   categoria.
+                                              utilizzato.                            Evidenziare, inoltre, le postazioni
+                                                                                     che hanno ricevuto un “upgrade”.
+Software per l’automazione dei flussi
+                                              Indicare il numero di postazioni di    Indicare il numero di postazioni
+di lavoro documentali (es. software
+                                              lavoro digitali che posseggono         aggiuntive      che     posseggono
+per la creazione dei processi di
+                                              applicazioni che rientrano in questa   applicazioni che rientrano in quetsa
+approvazione/revisione/pubblicazione
+                                              categoria e la tipologia di software   categoria.
+documentale automatizzato, anche di
+                                              utilizzato.                            Evidenziare, inoltre, le postazioni
+carattere specifico per il settore
+                                                                                     che hanno ricevuto un “upgrade”.
+merceologico)
+                                              Indicare il numero di postazioni di    Indicare il numero di postazioni
+                                              lavoro digitali che posseggono         aggiuntive      che     posseggono
+Piattaforme per la condivisione e la          applicazioni che rientrano in questa   applicazioni che rientrano in quetsa
+distribuzione dei contenuti interni           categoria e la tipologia di            categoria.
+                                              piattaforma utilizzata.                Evidenziare, inoltre, le postazioni
+                                                                                     che hanno ricevuto un “upgrade”.
+                                              Indicare il numero di postazioni di    Indicare il numero di postazioni
+                                              lavoro digitali che posseggono         aggiuntive      che     posseggono
+Software di firma digitale e di               applicazioni che rientrano in questa   applicazioni che rientrano in quetsa
+archiviazione a norma di legg.                categoria e la tipologia di software   categoria.
+                                              utilizzato.                            Evidenziare, inoltre, le postazioni
+                                                                                     che hanno ricevuto un “upgrade”.
+                                              B Digital Commerce & Engagement
+                                             MAPPATURA DELLE DOTAZIONI
+                                  (descrizione e composizone del portafoglio applicativo)
+Piattaforme integrate di digital
+commerce comprensive di eventuali                                                    Indicare il numero di software
+applicazioni       addizionali.      Tali     Indicare il numero di software         posseduti che rientrano in questa
+piattaforme possono includere anche           posseduti che rientrano in questa      categoria decrivendone le specifiche
+funzionalità di integrazione con i punti      categoria decrivendone le specifiche   funzioni, evidenziando le nuove
+vendita (es. Click-and-collect) e altre       funzioni.                              soluzioni introdotte in seguito
+simili modalità di integrazione tra                                                  all’intervento realizzato.
+acquisti in presenza e acquisti online.
+                                    Sezione 4: Analisi per Tipologia di Intervento
+                                                    ANALISI EX-ANTE                        ANALISI EX-POST
+Piattaforme per gestione di campagne
+                                                                                  Indicare il numero di software
+pubblicitarie/promozionali sui canali
+                                           Indicare il numero di software         posseduti che rientrano in questa
+digitali (Digital Marketing) che possano
+                                           posseduti che rientrano in questa      categoria decrivendone le specifiche
+comprendere          promozione        e
+                                           categoria decrivendone le specifiche   funzioni, evidenziando le nuove
+ottimizzazione su motori di ricerca
+                                           funzioni.                              soluzioni introdotte in seguito
+generali o settoriali, campagne e-mail,
+                                                                                  all’intervento realizzato.
+Social, Ads personalizzate;
+Piattaforme di Digital Experience                                                 Indicare il numero di software
+(gestione       contenuti      web     e   Indicare il numero di software         posseduti che rientrano in questa
+personalizzazione) ai fini della           posseduti che rientrano in questa      categoria decrivendone le specifiche
+condivisione di informazioni, servizi e    categoria decrivendone le specifiche   funzioni, evidenziando le nuove
+supporto ai clienti / partner;             funzioni.                              soluzioni introdotte in seguito
+                                                                                  all’intervento realizzato.
+Piattaforme di Analytics a supporto                                               Indicare il numero di software
+dell’analisi del digital commerce ed       Indicare il numero di software         posseduti che rientrano in questa
+engagement;                                posseduti che rientrano in questa      categoria decrivendone le specifiche
+                                           categoria decrivendone le specifiche   funzioni, evidenziando le nuove
+                                           funzioni.                              soluzioni introdotte in seguito
+                                                                                  all’intervento realizzato.
+Piattaforme di supporto e gestione                                                Indicare il numero di software
+clienti personalizzate via Web, Mobile     Indicare il numero di software         posseduti che rientrano in questa
+App, Social;                               posseduti che rientrano in questa      categoria decrivendone le specifiche
+                                           categoria decrivendone le specifiche   funzioni, evidenziando le nuove
+                                           funzioni.                              soluzioni introdotte in seguito
+                                                                                  all’intervento realizzato.
+Integrazione con piattaforme di terze                                             Indicare il numero di integrazioni
+parti (portali eCommerce o verticali di    Indicare il numero di integrazioni     esistenti con piattaforme di terze
+segmento);                                 esistenti con piattaforme di terze     parti, a valle dell’intervento
+                                           parti.                                 realizzato, evidenziando le nuove
+                                                                                  integrazioni instaurate.
+Integrazione con provider di logistica e                                          Indicare il numero di integrazioni
+distribuzione per il miglioramento del     Indicare il numero di integrazioni     esistenti con piattaforme di terze
+tracciamento ed efficacia della            esistenti con piattaforme di terze     parti, a valle dell’intervento
+distribuzione.                             parti.                                 realizzato, evidenziando le nuove
+                                                                                  integrazioni instaurate.
+                                                  C Cloud Computing
+                                          MAPPATURA DELLE DOTAZIONI
+                      (descrizione e composizone delle dotazioni informatiche locali e in cloud)
+                                         Indicare la presenza di applicazioni
+                                         erogate già in cloud – ovvero basate
+                                         su IaaS, PaaS, o SaaS.
+Presenza di applicazioni erogate già in                                         Indicare la presenza di applicazioni
+                                         N.B. La presenza di applicazioni
+cloud – ovvero basate su IaaS, PaaS, o                                          erogate in cloud – ovvero basate su
+                                         rientranti nella presente casistica
+SaaS                                                                            IaaS, PaaS, o SaaS.
+                                         rende     non      ammissibile     la
+                                         realizzazione di interventi in ambito
+                                         Cloud Compuing.
+                                      Sezione 4: Analisi per Tipologia di Intervento
+                                                     ANALISI EX-ANTE                          ANALISI EX-POST
+                                           Indicare la presenza di applicazioni
+                                           applicazioni      “Client”,     ovvero
+                                           esclusivamente         eseguite     su
+                                           dispositivi     individuali    e     di
+Presenza applicazioni “Client”, ovvero                                               Indicare la presenza di applicazioni
+                                           produttività personale.
+esclusivamente eseguite su dispositivi                                               erogate in cloud – ovvero basate su
+                                           N.B. La presenza di applicazioni
+individuali e di produttività personale                                              IaaS, PaaS, o SaaS.
+                                           rientranti nella presente casistica
+                                           rende       non     ammissibile      la
+                                           realizzazione di interventi in ambito
+                                           Cloud Compuing.
+                                           Indicare il numero di macchine            Indicare il numero e la tipologia di
+Servizi di Calcolo                         fisiche che erogano servizi previsti di   virtual machine acquisite o migrate
+                                           cui al presente punto.                    in un cloud pubblico.
+                                           Indicare il numero di macchine            Indicare il numero e la tipologia di
+Servizi di Archiviazione e Database        fisiche che erogano servizi previsti di   virtual machine acquisite o migrate
+                                           cui al presente punto.                    in un cloud pubblico.
+                                           Indicare il numero di macchine            Indicare il numero e la tipologia di
+Servizi di Rete                            fisiche che erogano servizi previsti di   virtual machine acquisite o migrate
+                                           cui al presente punto.                    in un cloud pubblico.
+                                           Indicare il numero di macchine            Indicare il numero e la tipologia di
+Servizi di gestione identità e sicurezza   fisiche che erogano servizi previsti di   virtual machine acquisite o migrate
+                                           cui al presente punto.                    in un cloud pubblico.
+                                           Indicare il numero di macchine            Indicare il numero e la tipologia di
+Servizi di strumenti di sviluppo e test    fisiche che erogano servizi previsti di   virtual machine acquisite o migrate
+                                           cui al presente punto.                    in un cloud pubblico.
+                                                    D. Cyber Security
+                                            MAPPATURA DELLE DOTAZIONI
+                             (descrizione e composizone del portafoglio di sistemi/servizi)
+                                                                                 Indicare il numero di sistemi/servizi
+                                           Indicare il numero di sistemi/servizi posseduti che rientrano in questa
+Sistemi e servizi per la gestione delle posseduti che rientrano in questa categoria decrivendone le specifiche
+identità e degli accessi                   categoria decrivendone le specifiche funzioni ed evidenziando le nuove
+                                           funzioni.                             soluzioni introdotte in seguito
+                                                                                 all’intervento realizzato.
+                                                                                 Indicare il numero di sistemi/servizi
+                                           Indicare il numero di sistemi/servizi posseduti che rientrano in questa
+Sistemi e servizi per sicurezza della posseduti che rientrano in questa categoria decrivendone le specifiche
+rete aziendale                             categoria decrivendone le specifiche funzioni ed evidenziando le nuove
+                                           funzioni.                             soluzioni introdotte in seguito
+                                                                                 all’intervento realizzato.
+                                                                                 Indicare il numero di sistemi/servizi
+                                           Indicare il numero di sistemi/servizi posseduti che rientrano in questa
+Sistemi e servizi per la sicurezza degli posseduti che rientrano in questa categoria decrivendone le specifiche
+endpoint                                   categoria decrivendone le specifiche funzioni ed evidenziando le nuove
+                                           funzioni.                             soluzioni introdotte in seguito
+                                                                                 all’intervento realizzato.
+                                                                                 Indicare il numero di sistemi/servizi
+                                           Indicare il numero di sistemi/servizi posseduti che rientrano in questa
+Sistemi e servizi per la sicurezza dei posseduti che rientrano in questa categoria decrivendone le specifiche
+dati                                       categoria decrivendone le specifiche funzioni ed evidenziando le nuove
+                                           funzioni.                             soluzioni introdotte in seguito
+                                                                                 all’intervento realizzato.
+                                     Sezione 4: Analisi per Tipologia di Intervento
+                                                    ANALISI EX-ANTE                             ANALISI EX-POST
+                                                                                     Indicare il numero di sistemi/servizi
+                                           Indicare il numero di sistemi/servizi     posseduti che rientrano in questa
+Sistemi e servizi per la gestione delle    posseduti che rientrano in questa         categoria decrivendone le specifiche
+vulnerabilità                              categoria decrivendone le specifiche      funzioni ed evidenziando le nuove
+                                           funzioni.                                 soluzioni introdotte in seguito
+                                                                                     all’intervento realizzato.
+                                                                                     Indicare il numero di sistemi/servizi
+                                           Indicare il numero di sistemi/servizi     posseduti che rientrano in questa
+                                           posseduti che rientrano in questa         categoria decrivendone le specifiche
+Sistemi e servizi di Security Analytics;
+                                           categoria decrivendone le specifiche      funzioni ed evidenziando le nuove
+                                           funzioni.                                 soluzioni introdotte in seguito
+                                                                                     all’intervento realizzato.
+                                                                                     Indicare il numero di sistemi/servizi
+                                           Indicare il numero di sistemi/servizi     posseduti che rientrano in questa
+Sistemi e servizi per application          posseduti che rientrano in questa         categoria decrivendone le specifiche
+security                                   categoria decrivendone le specifiche      funzioni ed evidenziando le nuove
+                                           funzioni.                                 soluzioni introdotte in seguito
+                                                                                     all’intervento realizzato.
+                                                                                     Indicare il numero di sistemi/servizi
+                                           Indicare il numero di sistemi/servizi     posseduti che rientrano in questa
+Sistemi e servizi per la gestione del      posseduti che rientrano in questa         categoria decrivendone le specifiche
+rischio e della compliance                 categoria decrivendone le specifiche      funzioni ed evidenziando le nuove
+                                           funzioni.                                 soluzioni introdotte in seguito
+                                                                                     all’intervento realizzato.
+
+                      Sezione 5: Sintesi dell’analisi ex-ante (azioni di miglioramento suggerite)
+AMBITI DI
+DIGITALIZZAZIONE                    SINTESI DELLA DIAGNOSI DIGITALE EX
+                                                                                   DETERMINAZIONE DEL FABBISOGNO
+VALUTATI:                              ANTE PER CIASCUN AMBITO DI
+                                                                                              DIGITALE
+(selezionare gli Interventi di                  INTERVENTO
+interesse del Progetto)
+                                                                                   Indicare il numero esatto di postazioni
+                                 Descrivere sinteticamente l’esito della
+                                                                                   che necessitano una sostituzione e il
+☐    A. Digital Workplace        valutazione ex-ante eseguita su questo
+                                                                                   numero       delle   postazione      che
+                                 ambito di intervento.
+                                                                                   necessitano un upgrade.
+     B. Digital Commerce &Descrivere sinteticamente l’esito della                  Indicare il numero esatto di interventi
+☐    Engagement           valutazione ex-ante eseguita su questo                   Digital Commerce & Engagement
+                          ambito di intervento.                                    previsti
+    C.1. Cloud Computing  Descrivere sinteticamente l’esito della                  Indicare se l’Azienda necessiti (o no) di
+☐ - Application Server    valutazione ex-ante eseguita su questo                   acquistare (o migrare verso) una VM -
+                          ambito di intervento.                                    Application Server.
+    C.2. Cloud Computing  Descrivere sinteticamente l’esito della                  Indicare se l’Azienda necessiti (o no) di
+☐ - Database Server       valutazione ex-ante eseguita su questo                   acquistare (o migrare verso) una VM -
+                          ambito di intervento.                                    Database Server.
+    C.3. Cloud Computing  Descrivere sinteticamente l’esito della                  Indicare se l’Azienda necessiti (o no) di
+☐ - Web Server            valutazione ex-ante eseguita su questo                   acquistare (o migrare verso) una VM -
+                          ambito di intervento.                                    Web Server.
+    C.4. Cloud Computing  Descrivere sinteticamente l’esito della                  Indicare se l’Azienda necessiti (o no) di
+☐ - Database Back Up      valutazione ex-ante eseguita su questo                   acquistare (o migrare verso) una VM -
+                          ambito di intervento.                                    Database Back up.
+                          Descrivere sinteticamente l’esito della                  Indicare se l’Azienda necessita o no di
+☐ D. Cyber Security       valutazione ex-ante eseguita su questo                   un intervento in cyber security e se si di
+                          ambito di intervento.                                    auale o di quali.
+IMPATTO PREVISTO DALLE SOLUZIONI SUGGERITE
+Descrivere sinteticamente
+l’esito della valutazione ex-
+ante eseguita evidenziando
+l’impatto stimato in termini
+di: Miglioramento / crescita
+                                        Inserire una breve ma esaustiva descrizione dell’impatto stimato.
+del fatturato aziendale;
+Miglioramento dei costi
+operativi      aziendali      e
+Riduzione       dei      rischi
+operativi aziendali.
+PRINCIPALI RISCHI IDENTIFICATI PER LE INIZIATIVE PREDISPOSTE
+
+Descrivere quali rischi derivino dall’attuazione degli interventi (se individuati).
+
+CRITERI CHIAVE DI SUCCESSO RICHIESTI PER IL COMPLETAMENTO DELLE INIZIATIVE
+
+Descrivere gli elementi chiave da osservare per assicurare il completamento delle iniziative.
+
+
+
+                       Sezione 6: Sintesi dell’analisi ex-ante (piano complessivo – master plan)
+                                 Rispetto agli interventi individuati nella sezione precedente, in questo campo è
+IDENTIFICAZIONE DELLE            necessario individuare l’ordine di avvio per priorità di intervento delle azioni suggerite.
+PRIORITA’ DELLE AZIONI DI        Tale sintesi deve evidenziare le dipendenze esistenti fra le iniziative, la capacità/
+SUGGERITE                        disponibilità di risorse economiche ed umane richieste, la disponibilità di
+                                 soluzioni/partner tecnologici nell’avviare le attività di trasformazione.
+NUMERO DI MESI
+NECESSARI PER IL
+COMPLETAMENTO                    Indicare il numero dei mesi previsti.
+DELL’INTERVENTO DALLA
+DATA DI AVVIO
+DATA PREVISTA PER IL
+COMPLETAMENTO
+                                 ___/___/______
+DELL’INTERVENTO (6 mesi
+dalla data di concessione)
+CRONOPROGRAMMA
+                                 Rappresentare, anche con l’ausilio di strumenti grafici (es. GANTT), le azioni/interventi
+PREVISTO DELLE AZIONI
+                                 suggeriti rispetto ai tempi di realizzazione previsti.
+SUGGERITE
+
+
+                                        Sezione 7: Sintesi dell’analisi ex-post
+                         (valutazione dei risultati raggiunti rispetto a quelli previsti ex-ante)
+AMBITI DI
+DIGITALIZZAZIONE                 SINTESI DELLA DIAGNOSI DIGITALE EX-
+                                                                                 MISURA DELLA REALIZZAZIONE DEGLI
+VALUTATI:                           POST PER CIASCUN AMBITO DI
+                                                                                           INTERVENTI
+(selezionare gli Interventi di               INTERVENTO
+interesse del Progetto)
+                                 Descrivere sinteticamente l’esito della      Indicare il numero esatto di postazioni che
+☐    A. Digital Workplace        valutazione ex-post eseguita su questo       sostutuite/potenziate     che     rientrano
+                                 ambito di intervento.                        nell’itervento.
+     B. Digital Commerce &       Descrivere sinteticamente l’esito della
+                                                                              Indicare se l’Azienda abbia realizzato
+☐    Engagement                  valutazione ex-post eseguita su questo
+                                                                              l’intervento in cyber security previsto.
+                                 ambito di intervento.
+     C.1. Cloud Computing        Descrivere sinteticamente l’esito della      Indicare il numero esatto di interventi
+☐    - Application Server        valutazione ex-post eseguita su questo       Digital Commerce and engagement
+                                 ambito di intervento.                        realizzati.
+      C.2. Cloud Computing      Descrivere sinteticamente l’esito della Indicare se l’Azienda abbia realizzato
+☐     - Database Server         valutazione ex-post eseguita su questo l’intervento di aquisto (o di migrazione)
+                                ambito di intervento.                      previsto.
+      C.3. Cloud Computing      Descrivere sinteticamente l’esito della Indicare se l’Azienda abbia realizzato
+☐ - Web Server                  valutazione ex-post eseguita su questo l’intervento di aquisto (o di migrazione)
+                                ambito di intervento.                      previsto.
+      C.4. Cloud Computing      Descrivere sinteticamente l’esito della Indicare se l’Azienda abbia realizzato
+☐ - Database Back Up            valutazione ex-post eseguita su questo l’intervento di aquisto (o di migrazione)
+                                ambito di intervento.                      previsto.
+                                Descrivere sinteticamente l’esito della
+                                                                           Indicare se l’Azienda abbia realizzato
+☐ D. Cyber Security             valutazione ex-post eseguita su questo
+                                                                           l’intervento di aquisto (previsto.
+                                ambito di intervento.
+SERVIZI SOFTWARE IN LICENZA/CANONE DI UTILIZZO ASSOCIATI ALL’INTERVENTO DESCRITTO PER LA DURATA
+COMPLESSIVA DI 36 MESI DALL’ATTIVAZIONE
+(indicare “Sì” o “No” se dalla valutazione effettuata EX-POST sia rilevabile la presenza di servizi per almeno 36 mesi
+dall’attivazione)
+☐ A. Digital Workplace                            Si ☐                                         No ☐
+      B. Digital Commerce &
+☐                                                 Si ☐                                         No ☐
+      Engagement
+☐ C. Cloud Computing                              Si ☐                                         No ☐
+☐ D. Cyber Security                               Si ☐                                         No ☐
+GIUDIZIO FINALE SUL RAGGIUNGIMENTO DEGLI OBIETTIVI
+Descrivere EX-POST l’esito conclusivo della Diagnosi Digitale condotta in seguito alla realizzazione del gli interventi.
+
+
+                       EX-ANTE                                                       EX-POST
+
+                       In fede                                                       In fede
+
+    L’Innovation Manager o altro soggetto previsto              L’Innovation Manager o altro soggetto previsto
+                    dall’Avviso                                                 dall’Avviso
+
+    DATATO E SOTTOSCRITTO CON FIRMA DIGITALE                    DATATO E SOTTOSCRITTO CON FIRMA DIGITALE
+
+
+                  Per presa visione
+                                                                                Per presa visione
+              Il Legale Rappresentante
+                                                                           Il Legale Rappresentante
+    DATATO E SOTTOSCRITTO CON FIRMA DIGITALE
+                                                                DATATO E SOTTOSCRITTO CON FIRMA DIGITALE
+

@@ -1,0 +1,9 @@
+{
+    "name": "dolibarr/diagnosi_digitale",
+    "type": "project",
+    "require": {
+        "setasign/fpdi": "^2.6",
+        "smalot/pdfparser": "^2.12",
+        "phpoffice/phpword": "^1.3"
+    }
+}

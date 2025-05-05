@@ -1,0 +1,28 @@
+// ... existing code ...
+
+# Configurazione amministrativa
+Industria40Setup=Configurazione Industria 4.0
+EnableOCR=Abilita OCR (riconoscimento ottico dei caratteri)
+EnableOCRDescription=Attiva la funzionalità OCR per estrarre testo da PDF e immagini
+OpenAIAPIKey=Chiave API OpenAI
+OpenAIAPIKeyDescription=Utilizzata per generare descrizioni di immagini e documenti con intelligenza artificiale
+CheckingOCRTools=Verifica strumenti OCR
+Available=Disponibile
+NotAvailable=Non disponibile
+OCRToolsMissing=Alcuni strumenti OCR necessari non sono disponibili sul server. Contatta l'amministratore per installare tesseract-ocr e imagemagick
+TesseractNotAvailable=Tesseract OCR non è disponibile sul server. L'OCR non funzionerà correttamente.
+Tool=Strumento
+Status=Stato
+SetupSaved=Configurazione salvata
+
+# OCR e analisi AI
+OCRText=Testo OCR
+NoOCRTextAvailable=Testo OCR non disponibile
+ExtractTextWithOCR=Estrai testo con OCR
+OCRNotApplicable=OCR non applicabile per questo tipo di file
+AISuggestions=Suggerimenti AI
+SuggestedName=Nome suggerito
+SuggestedTag=Tag suggerito
+Use=Usa
+
+# ... existing code ...

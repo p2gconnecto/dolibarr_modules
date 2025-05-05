@@ -1,0 +1,24 @@
+# Translation file
+
+#
+# Generic
+#
+
+# Module label 'ModuleIndustria40Name'
+ModuleIndustria40Name = Industria40
+# Module description 'ModuleIndustria40Desc'
+ModuleIndustria40Desc = Manage Industria 4.0 projects and technical analysis
+
+#
+# Admin page
+#
+Industria40Setup = Industria40 Setup
+Settings = Settings
+Industria40SetupPage = Configure the Industria40 module
+
+#
+# About page
+#
+About = About
+Industria40About = About Industria40
+Industria40AboutPage = Information about the Industria40 module

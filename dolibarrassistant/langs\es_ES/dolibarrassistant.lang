@@ -1,0 +1,95 @@
+# Copyright (C) 2023 SuperAdmin
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#
+# Generic
+#
+
+# Module label 'ModuleDolibarrAssistantName'
+ModuleDolibarrAssistantName = Dolibarr Assistant
+# Module description 'ModuleDolibarrAssistantDesc'
+ModuleDolibarrAssistantDesc = Dolibarr Assistant
+
+#
+# Admin page
+#
+DolibarrAssistantSetup = DolibarrAssistant setup
+Settings = Settings
+DolibarrAssistantSetupPage = DolibarrAssistant setup page
+DOLIBARRASSISTANT_MYPARAM1 = My param 1
+DOLIBARRASSISTANT_MYPARAM1Tooltip = My param 1 tooltip
+DOLIBARRASSISTANT_MYPARAM2=My param 2
+DOLIBARRASSISTANT_MYPARAM2Tooltip=My param 2 tooltip
+
+
+#
+# About page
+#
+About = About
+DolibarrAssistantAbout = About DolibarrAssistant
+DolibarrAssistantAboutPage = DolibarrAssistant about page
+
+#
+# Assistant messages
+#
+ImYourAssistant = Soy tu asistente de Dolibarr. En que te puedo ayudar? Puedo <a onclick="sendMessageRequest('crear')" href="#"><b>crear</b></a> o <a onclick="sendMessageRequest('consultar')" href="#"><b>consultar</b></a> alguna cosa?
+ICantUnderstand = Perdona, Pero no entiendo este mensaje. Puedes consultar el <a onclick="sendMessageRequest('listado de comandos')" href="#"><b>listado de comandos</b></a>
+ICanHelpCreate = Puedo ayudarte a crear un <a href='#' onclick='sendMessageRequest("crear producto")'><b>producto</b></a>, <a href='#' onclick='sendMessageRequest("crear tercero")'><b>tercero</b></a>, <a href='#' onclick='sendMessageRequest("crear factura")'><b>factura</b></a>, <a href='#' onclick='sendMessageRequest("crear presupuesto")'><b>presupuesto</b></a>. Que creamos?
+ThirdCreated = El tercero ha sido creado:
+InvoiceSomethingElse = Haga click para añadir productos manualmente o genera una <a onclick="sendMessageRequest('descripcion automatica')" href="#"><b>descripción automaticamente</b></a>. O quieres <a onclick="sendMessageRequest('crear')" href="#"><b>crear</b></a> o <a onclick="sendMessageRequest('consultar')" href="#"><b>consultar</b></a> otra cosa?
+ThirdSomethingElse = Haga click para añadir más detalles. O quieres <a onclick="sendMessageRequest('crear')" href="#"><b>crear</b></a> o <a onclick="sendMessageRequest('consultar')" href="#"><b>consultar</b></a> otra cosa?
+SomethingElse = Haga click para añadir más detalles. O quieres <a onclick="sendMessageRequest('crear')" href="#"><b>crear</b></a> o <a onclick="sendMessageRequest('consultar')" href="#"><b>consultar</b></a> otra cosa?
+SomethingElseAfterAI = Haga click para añadir más productos manualmente o añadir precios. O quieres <a onclick="sendMessageRequest('crear')" href="#"><b>crear</b></a> o <a onclick="sendMessageRequest('consultar')" href="#"><b>consultar</b></a> otra cosa?
+ProductSomethingElse = Genera una <a onclick="sendMessageRequest('descripcion automatica')" href="#"><b>descripción</b></a> o una <a onclick="sendMessageRequest('generar imagen')" href="#"><b>imagen</b></a> automaticamente. O quieres <a onclick="sendMessageRequest('crear')" href="#"><b>crear</b></a> o <a onclick="sendMessageRequest('consultar')" href="#"><b>consultar</b></a> otra cosa?
+SayMeThirdName = Dime el nombre del tercero
+createproposalto = crear presupuesto a
+createinvoiceto = crear factura a
+ICreatedFollowingInvoice = He creado la siguiente factura:
+ICreatedFollowingproposal = He creado el siguiente presupuesto:
+ClickOnItAddProducts = Pulsa en ella para añadir productos
+create = crear
+createthird = crear tercero
+createinvoice = crear factura
+YouCanCreateInvoiceFor = Puede crear una factura para:
+OrTellMeNameThird = O dime el nombre del tercero
+TellMeNameThird = Dime el nombre del tercero
+createproposal = crear presupuesto
+YouCanCreateProposalFor = Puedo crear un presupuesto para:
+DoYouWantSomeThisFirst = Desea consultar algo para este cliente:
+check = consultar
+checkabout = consultar sobre
+ThisDunctionalityRequiresOpenAIKey = Esta funcionalidad requiere una clave de OpenAI, puedes generarla desde y puedes ver un video de su configuración desde. <a onclick="sendMessageRequest('anadir clave openai')" href="#"><b>Añadir clave OpenAI</b></a>
+setopenaikey = anadir clave openai
+SayMeOpenAIKey = Dime tu clave de OpenAI
+TheCustomerContactAre = Los datos de contacto del cliente son:
+CommandList = listado de comandos
+TheseAreExamplesOfWhatICurrentlyUnderstand = Esto son ejemplos de lo que entiendo actualmente:
+NoThirdFoundWithThisName = No se han encontrado terceros con este nombre
+AreYouReferringToOneOfThese = Te refieres a alguno de estos:
+automaticdescription = descripcion automatica
+WhatTopic = ¿Sobre que tema quieres que genere la descripción?
+OrProductName = O genero una descripción de:
+WhatTopicImage = ¿Sobre que tema quieres que genere la imagen?
+OrProductNameImage = O genero una imagen de:
+IAddIt = ¿Lo añado?
+ProposalAIPrompt = Partidas de un presupuesto sin precios de
+OpenAISaved = Clave de OpenAI guardada, por favor recargue la página para usarla
+createproduct = crear producto
+SayMeProductName = Dime el nombre del producto
+ProductCreated = El producto ha sido creado
+generateimage = generar imagen
+TypeYourMessage = Escribe tu mensaje
+OrNewTopic = o describa un nuevo tema
+DescriptionAIPrompt = Descripcion de

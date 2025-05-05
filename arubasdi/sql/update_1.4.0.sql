@@ -1,0 +1,2 @@
+ALTER TABLE `llx_facture_extrafields` CHANGE `statoFattura` `statoFattura` INT(2) NULL DEFAULT 0; 
+UPDATE `llx_extrafields` SET `fielddefault` = '0' WHERE name = 'statoFattura' and elementtype = 'facture';

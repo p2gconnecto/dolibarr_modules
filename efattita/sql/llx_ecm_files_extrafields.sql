@@ -1,0 +1,1 @@
+ALTER TABLE `llx_ecm_files_extrafields` ADD UNIQUE(`fk_object`); 
