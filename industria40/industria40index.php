@@ -2,22 +2,47 @@
 require '../../main.inc.php';
 require_once DOL_DOCUMENT_ROOT.'/societe/class/societe.class.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formcompany.class.php';
+dol_syslog("industria40index.php: Loading Yurij's file manager 001", LOG_DEBUG);
+
 // Assuming a class for Perizia exists or will be created
 // require_once __DIR__.'/class/perizia.class.php';
 
 // Aggiungi l'inizializzazione del modulo
 require_once DOL_DOCUMENT_ROOT . '/custom/industria40/core/init.inc.php';
+dol_syslog("industria40index.php: Loading Yurij's file manager 002", LOG_DEBUG);
+// Include the new functions file
+//require_once DOL_DOCUMENT_ROOT . '/custom/industria40/file_manager.php'; // CORRETTO: Percorso assoluto completo
+require_once DOL_DOCUMENT_ROOT . '/custom/industria40/file_manager_functions.php'; // CORRETTO: Percorso assoluto completo
+
+dol_syslog("industria40index.php: Loading Yurij's file manager 004", LOG_DEBUG);
 
 // Ensure $langs is loaded for the main page
-$langs->loadLangs(array("companies", "users", "industria40@industria40"));
+$langs->loadLangs(array("companies", "users", "industria40@industria40", "file_manager@industria40"));
+
+// --- Debugging GET and POST data ---
+dol_syslog("industria40index.php: Raw GET data: " . print_r($_GET, true), LOG_DEBUG);
+dol_syslog("industria40index.php: Raw POST data: " . print_r($_POST, true), LOG_DEBUG);
+dol_syslog("industria40index.php: Request Method: " . $_SERVER['REQUEST_METHOD'], LOG_DEBUG);
+dol_syslog("industria40index.php: HTTP_REFERER: " . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'Not set'), LOG_DEBUG);
+dol_syslog("industria40index.php: Full _REQUEST: " . print_r($_REQUEST, true), LOG_DEBUG);
 
 $socid = GETPOSTINT('socid');
-$periziaid = GETPOSTINT('periziaid'); // Assuming Perizia ID is integer rowid now
-$periziaid_sanitized = $periziaid; // Variabile esplicita per garantire la coerenza
+$periziaid = GETPOSTINT('periziaid');
+$periziaid_sanitized = $periziaid;
 $action = GETPOST('action', 'alpha');
-$mode = GETPOST('mode', 'alpha'); // 'view' or 'add_new'
+$mode = GETPOST('mode', 'alpha');
+$view_mode = GETPOST('view_mode', 'alpha'); // New parameter for view switching
+$file_name_param = GETPOST('file_name', 'alpha'); // For AI view
 
-// --- Action Handling ---
+// Call load_dotenv() early if it's in file_manager_functions.php and needed globally
+if (function_exists('load_dotenv')) {
+    load_dotenv();
+}
+// Define $modulepart globally for document.php URLs
+$modulepart = 'industria40';
+
+
+// --- Action Handling (Perizia Add/Edit - Keep existing logic if any) ---
 if ($action == 'addperizia' && !empty(GETPOST('ref', 'alpha')) && GETPOSTINT('socid_new') > 0) { // Remove the permission check
     $db->begin();
     $new_ref = GETPOST('ref', 'alpha');
@@ -32,8 +57,8 @@ if ($action == 'addperizia' && !empty(GETPOST('ref', 'alpha')) && GETPOSTINT('so
         $new_perizia_id = $db->last_insert_id(MAIN_DB_PREFIX."industria40_perizia");
         $db->commit();
         setEventMessages($langs->trans("PeriziaAdded", $new_ref), null, 'mesgs');
-        // Redirect to view the newly added perizia
-        header("Location: ".$_SERVER['PHP_SELF']."?socid=".$new_socid."&periziaid=".$new_perizia_id);
+        // Redirect to view the newly added perizia, perhaps in manage mode
+        header("Location: ".$_SERVER['PHP_SELF']."?socid=".$new_socid."&periziaid=".$new_perizia_id."&view_mode=manage");
         exit;
     } else {
         $db->rollback();
@@ -44,9 +69,23 @@ if ($action == 'addperizia' && !empty(GETPOST('ref', 'alpha')) && GETPOSTINT('so
     }
 }
 
+// Aggiungi controlli aggiuntivi per il debugging
+dol_syslog("industria40index.php: Script execution started", LOG_DEBUG);
+dol_syslog("industria40index.php: PHP version: " . PHP_VERSION, LOG_DEBUG);
+dol_syslog("industria40index.php: Server software: " . (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : 'Unknown'), LOG_DEBUG);
+
 try {
-    llxHeader('', $langs->trans('Industria40'));
-    print load_fiche_titre($langs->trans('Industria40'), '', 'title_generic.png@industria40');
+    llxHeader('', $langs->trans('Industria40FileManager'));
+    dol_syslog("industria40index.php: After llxHeader call", LOG_DEBUG);
+    print load_fiche_titre($langs->trans('Industria40FileManager'), '', 'title_generic.png@industria40');
+
+    // --- Basic error handling for the script ---
+    // Check access permissions (generic approach)
+    if (!$user->rights->societe->lire) {
+        dol_syslog("industria40index.php: Access denied - User doesn't have societe->lire permission", LOG_WARNING);
+        accessforbidden('You need permission to read companies');
+        exit;
+    }
 
     $formcompany = new FormCompany($db);
 
@@ -56,20 +95,44 @@ try {
     $resql_check_company = $db->query($sql_check_company);
     $num_companies = $db->num_rows($resql_check_company);
 
+    // Modifica la parte di selezione azienda per usare un approccio più semplice
     if ($num_companies == 0) {
          print '<div class="warning">'.$langs->trans("NoThirdPartyDefined").' '.$langs->trans("PleaseCreateOneFirst").'</div>';
     } else {
-        // Always show company selection unless adding new? Or keep it simple? Keep it simple for now.
-        print '<form name="select_company_form" action="'.$_SERVER["PHP_SELF"].'" method="POST">';
-        print '<input type="hidden" name="action" value="set_company">'; // Action for company change
+        // Versione semplificata del form di selezione
+        print '<form id="selectCompanyForm" name="select_company_form" action="'.$_SERVER["PHP_SELF"].'" method="GET">'; // Cambiato da POST a GET
+        print '<input type="hidden" name="periziaid" value="0">';
+        print '<input type="hidden" name="view_mode" value="">';
         print $langs->trans("SelectCompany").': ';
-        print $formcompany->select_company($socid, 'socid', '', 1);
+
+        // Usa il select standard senza personalizzazioni
+        print $formcompany->select_company($socid, 'socid', '', 1, 0, 0, array(), 0, 'minwidth300', '');
+
         print ' <button type="submit" class="button">'.$langs->trans("Select").'</button>';
-        print '</form><br>';
+        print '</form>';
+
+        // Script JS più semplice
+        print '<script>
+            jQuery(document).ready(function() {
+                console.log("Document ready in industria40index.php");
+            });
+        </script>';
+
+        print '<br>';
+    }
+
+    // --- Debugging socid before Mode Handling ---
+    dol_syslog("industria40index.php: Debugging before Mode Handling: socid value = " . $socid, LOG_DEBUG);
+    dol_syslog("industria40index.php: Debugging before Mode Handling: socid type = " . gettype($socid), LOG_DEBUG);
+    if (is_numeric($socid)) {
+        dol_syslog("industria40index.php: Debugging before Mode Handling: socid is numeric. intval(socid) = " . intval($socid), LOG_DEBUG);
+    } else {
+        dol_syslog("industria40index.php: Debugging before Mode Handling: socid is NOT numeric.", LOG_DEBUG);
     }
 
     // --- Mode Handling ---
-    if ($socid > 0) { // Only proceed if a company is selected
+    if ($socid > 0) {
+        dol_syslog("industria40index.php: Entered if (\$socid > 0) block. socid = " . $socid, LOG_DEBUG);
 
         // --- Add New Perizia Mode ---
         if ($mode == 'add_new') {
@@ -98,24 +161,26 @@ try {
             print '</form>';
         }
         // --- View/Select Existing Perizia Mode ---
-        else { // Default mode is 'view'
-            print '<div style="margin-bottom: 10px;">';
+        else {
+            print '<div style="margin-bottom: 10px; display:flex; align-items: center; gap: 10px;">'; // Flex container for selects and buttons
             // --- Perizia Selection Dropdown ---
             $sql_perizie = "SELECT rowid, ref FROM ".MAIN_DB_PREFIX."industria40_perizia";
-            $sql_perizie.= " WHERE fk_soc = ".$socid." AND entity IN (".getEntity('industria40_perizia', 1).")"; // Assuming perizia has entity
+            $sql_perizie.= " WHERE fk_soc = ".$socid." AND entity IN (".getEntity('industria40_perizia', 1).")";
             $sql_perizie.= " ORDER BY ref ASC";
 
             $resql_perizie = $db->query($sql_perizie);
-            $show_add_button = false; // Flag to control Add button display
+            $num_perizie = 0; // Initialize
+            $query_successful = false; // Flag to track if the perizie query was successful
 
             if ($resql_perizie) {
+                $query_successful = true;
                 $num_perizie = $db->num_rows($resql_perizie);
                 dol_syslog("industria40index.php: Found ".$num_perizie." perizie for socid ".$socid, LOG_DEBUG);
 
                 print '<form name="select_perizia_form" action="'.$_SERVER["PHP_SELF"].'" method="POST" style="display: inline-block;">';
-                print '<input type="hidden" name="socid" value="'.$socid.'">'; // Keep socid selected
+                print '<input type="hidden" name="socid" value="'.$socid.'">';
                 print $langs->trans("SelectExistingPerizia").': ';
-                print '<select name="periziaid" class="flat">';
+                print '<select name="periziaid" class="flat">'; // Removed onchange="this.form.submit()"
                 print '<option value="0">'.$langs->trans("SelectOne").'</option>';
                 if ($num_perizie > 0) {
                     while ($obj = $db->fetch_object($resql_perizie)) {
@@ -124,29 +189,25 @@ try {
                     }
                 }
                 print '</select>';
-                print ' <button type="submit" class="button">'.$langs->trans("View").'</button>';
+                print ' <button type="submit" class="button">'.$langs->trans("Select").'</button>'; // Added explicit select button
                 print '</form>';
-
-                $show_add_button = true; // Show add button if query succeeded
-
             } else {
                 // Generic error handling is sufficient now
                 $db_error = $db->lasterror();
                 dol_syslog("industria40index.php: Failed to fetch perizie: ".$db_error, LOG_ERR);
                 print '<div class="error">'.$langs->trans("ErrorFetchingPerizie").': '.$db_error.'</div>';
                 // Do not show add button if there's a general DB error fetching existing ones
+                // $query_successful remains false
             }
 
-            // --- Add New Button ---
-            if ($show_add_button) { // Remove the permission check for now
-               print ' &nbsp; <a href="'.$_SERVER["PHP_SELF"].'?socid='.$socid.'&mode=add_new" class="button button-add">'.$langs->trans("AddNewPerizia").'</a>';
-            }
+            // --- Add New Perizia Button ---
+            // if ($user->rights->industria40->creer) { // Or appropriate permission
+               print '<a href="'.$_SERVER["PHP_SELF"].'?socid='.$socid.'&mode=add_new" class="button button-add">'.$langs->trans("AddNewPerizia").'</a>';
+            // }
+            print '</div>';
 
-            print '</div>'; // End div for selection/add button
-
-            // --- File Manager Display ---
+            // --- File Manager Views (Upload, Manage, AI, Drawflow) OR Messages ---
             if ($periziaid > 0) {
-                // Fetch Perizia ref to display
                 $sql_get_ref = "SELECT ref FROM ".MAIN_DB_PREFIX."industria40_perizia WHERE rowid = ".$periziaid;
                 $resql_get_ref = $db->query($sql_get_ref);
                 $perizia_ref = $langs->trans("Unknown");
@@ -155,65 +216,88 @@ try {
                     $perizia_ref = $obj_ref->ref;
                 }
 
-                print '<h2>'.$langs->trans("FileManager").'</h2>';
-                print '<div>'.$langs->trans("ManagingFilesFor").': <strong>'.dol_escape_htmltag($perizia_ref).'</strong></div>';
+                print '<h2>'.$langs->trans("FileManagerForPerizia", dol_escape_htmltag($perizia_ref)).'</h2>';
 
-                // Setta il flag del file manager per sapere se i file esistono
-                $files_exist = false;
+                // Navigation for different views
+                print '<div class="tabs">';
+                print '<a href="'.$_SERVER['PHP_SELF'].'?socid='.$socid.'&periziaid='.$periziaid.'&view_mode=upload" class="tab'.($view_mode == 'upload' ? ' active' : '').'">'.$langs->trans("UploadFiles").'</a>';
+                print '<a href="'.$_SERVER['PHP_SELF'].'?socid='.$socid.'&periziaid='.$periziaid.'&view_mode=manage" class="tab'.($view_mode == 'manage' || empty($view_mode) ? ' active' : '').'">'.$langs->trans("ManageFiles").'</a>';
+                // AI view might be better accessed from a specific file in manage view, but a general link can be here too.
+                // print '<a href="'.$_SERVER['PHP_SELF'].'?socid='.$socid.'&periziaid='.$periziaid.'&view_mode=ai" class="tab'.($view_mode == 'ai' ? ' active' : '').'">'.$langs->trans("AIInteractions").'</a>';
+                print '<a href="'.$_SERVER['PHP_SELF'].'?socid='.$socid.'&periziaid='.$periziaid.'&view_mode=drawflow" class="tab'.($view_mode == 'drawflow' ? ' active' : '').'">'.$langs->trans("DrawflowMapping").'</a>';
+                print '</div>';
 
-                // Assicurati che tutte le directory necessarie esistano
-                $upload_dir = DOL_DATA_ROOT . '/industria40/documents/' . $socid . '/' . $periziaid;
-                if (!is_dir($upload_dir)) {
-                    if (dol_mkdir($upload_dir) >= 0) {
-                        @chmod($upload_dir, 0775);
-                        dol_syslog("industria40index.php: Created upload directory: " . $upload_dir, LOG_DEBUG);
-                    } else {
-                        dol_syslog("industria40index.php: Failed to create upload directory: " . $upload_dir, LOG_ERR);
-                        print '<div class="error">' . $langs->trans("ErrorCannotCreateDir", $upload_dir) . '</div>';
+                // Define $upload_dir_base and $upload_dir to be used by included views
+                $upload_dir_base = DOL_DATA_ROOT . '/industria40/documents';
+                $upload_dir = $upload_dir_base . '/' . $socid . '/' . $periziaid_sanitized;
+
+                // Ensure base directories exist (idempotent checks)
+                if (!is_dir($upload_dir_base)) dol_mkdir($upload_dir_base, 0775);
+                if (!is_dir($upload_dir_base . '/' . $socid)) dol_mkdir($upload_dir_base . '/' . $socid, 0775);
+                if (!is_dir($upload_dir)) dol_mkdir($upload_dir, 0775);
+
+                // Define $form_action_url for views
+                $form_action_url = $_SERVER['PHP_SELF'] . '?socid=' . $socid . '&periziaid=' . $periziaid_sanitized;
+
+                // Include the specific view file
+                // The included file will handle its specific $action values.
+                // The $action variable from GETPOST is available to them.
+                try {
+                    if ($view_mode == 'upload') {
+                        print '<h3>'.$langs->trans("UploadView").'</h3>';
+                        $include_file = __DIR__ . '/file_manager_upload_view.php';
+                        dol_syslog("industria40index.php: Attempting to include file: " . $include_file, LOG_DEBUG);
+
+                        if (file_exists($include_file)) {
+                            include $include_file;
+                        } else {
+                            dol_syslog("industria40index.php: Include file not found: " . $include_file, LOG_ERROR);
+                            print '<div class="error">File not found: file_manager_upload_view.php</div>';
+                        }
+                    } elseif ($view_mode == 'ai' && !empty($file_name_param)) {
+                        print '<h3>'.$langs->trans("AIInteractionViewFor", $file_name_param).'</h3>';
+                        $file_name_for_ai_view = $file_name_param;
+                        include __DIR__ . '/file_manager_ai_view.php';
+                    } elseif ($view_mode == 'drawflow') {
+                        print '<h3>'.$langs->trans("DrawflowView").'</h3>';
+                        include __DIR__ . '/file_manager_drawflow_view.php';
+                    } else { // Default to manage view
+                        $view_mode = 'manage'; // Ensure $view_mode is set for manage
+                        print '<h3>'.$langs->trans("ManageFilesView").'</h3>';
+                        include __DIR__ . '/file_manager_manage_view.php';
+                    }
+                } catch (Exception $e) {
+                    dol_syslog("industria40index.php: Exception during view inclusion (" . $view_mode . "): " . $e->getMessage(), LOG_ERR);
+                    print '<div class="error">Error including view: ' . $e->getMessage() . '</div>';
+                }
+            } else { // No perizia is currently selected ($periziaid is 0 or not set)
+                if ($query_successful) { // Only show these messages if the perizie query was successful
+                    if ($num_perizie > 0) {
+                        print '<div class="info">'.$langs->trans("PleaseSelectPeriziaToShowFiles").'</div>';
+                    } else { // $num_perizie is 0
+                        print '<div class="info">'.$langs->trans("NoPerizieFoundForCompany").' '.$langs->trans("UseAddButton").'</div>';
                     }
                 }
-
-                // Include il file_manager.php con gestione errori
-                $file_manager_path = __DIR__ . '/file_manager.php';
-                if (!file_exists($file_manager_path)) {
-                    dol_syslog("industria40index.php: file_manager.php not found at path: " . $file_manager_path, LOG_ERR);
-                    print '<div class="error">Error: file_manager.php not found.</div>';
-                } else {
-                    dol_syslog("industria40index.php: Including file_manager.php for socid: " . $socid . ", periziaid: " . $periziaid, LOG_DEBUG);
-                    try {
-                        include $file_manager_path;
-                    } catch (Exception $e) {
-                        dol_syslog("industria40index.php: Exception during file_manager.php inclusion: " . $e->getMessage(), LOG_ERR);
-                        print '<div class="error">Error including file manager: ' . $e->getMessage() . '</div>';
-                    }
-                }
-
-            } elseif ($socid > 0 && isset($num_perizie) && $num_perizie > 0) { // Check if $num_perizie is set
-                 print '<div class="info">'.$langs->trans("PleaseSelectPeriziaToShowFiles").'</div>';
-            } elseif ($socid > 0 && isset($num_perizie) && $num_perizie == 0) { // Check if $num_perizie is set
-                 print '<div class="info">'.$langs->trans("NoPerizieFoundForCompany").' '.$langs->trans("UseAddButton").'</div>';
+                // If !$query_successful, the database error message was already printed above.
+                // No need to print "NoPerizieFoundForCompany" in that case, as it might be misleading.
             }
-            // No specific message needed here if the table didn't exist, as the warning is shown above.
-        }
+        } // <-- questa parentesi chiude l'else della view/select perizia
     } else {
-        // Message if no company is selected (and companies exist)
+        dol_syslog("industria40index.php: Entered else block for (\$socid > 0). socid = " . $socid, LOG_DEBUG);
         if ($num_companies > 0) {
             print '<div class="info">'.$langs->trans("PleaseSelectCompany").'</div>';
         }
-    }
+    } // <-- chiusura if ($socid > 0)
 
     llxFooter();
 } catch (Exception $e) {
     dol_syslog("industria40index.php: Exception caught - " . $e->getMessage(), LOG_ERR);
     print '<div class="error">An error occurred: ' . $e->getMessage() . '</div>';
-    // Ensure footer is called even on error if header was called
-    // Check if headers already sent before calling footer again
     if (!headers_sent()) {
-         llxFooter();
+        llxFooter();
     }
 }
 
-// Make sure DB connection is closed only once
 if (!empty($db) && $db->connected) {
     $db->close();
 }

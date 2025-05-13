@@ -1,0 +1,68 @@
+/**
+ * CSS for image zoom functionality in industria40 module
+ */
+
+.image-zoom-container {
+    position: relative;
+    margin-bottom: 20px;
+    width: 500px;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.image-zoom-container img {
+    width: 100%;
+    display: block;
+    cursor: zoom-in;
+}
+
+.zoomed-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    cursor: zoom-out;
+    overflow: auto;
+}
+
+.zoomed-image img {
+    display: block;
+    margin: 20px auto;
+    max-width: 90%;
+    max-height: 90vh;
+    transform: scale(1.2);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+.zoom-instructions {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
+
+/* Pulsante di chiusura per dispositivi mobili */
+.close-zoom {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: #fff;
+    color: #333;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: bold;
+    z-index: 1001;
+    display: none;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}

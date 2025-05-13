@@ -1,0 +1,78 @@
+/**
+ * Stili per gli indicatori AI e tooltip
+ * Utilizzati nella visualizzazione dei file con descrizioni AI
+ */
+
+.ai-description-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.ai-description-indicator i {
+    font-size: 14px;
+}
+
+.ai-description-tooltip {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 250px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 100;
+    text-align: left;
+    color: #444;
+}
+
+.ai-tooltip-content {
+    margin-bottom: 8px;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.ai-description-indicator:hover .ai-description-tooltip {
+    display: block;
+}
+
+.ai-summary-compact {
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 0.9em;
+    color: #444;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 3px;
+    border-left: 3px solid #2c81ba;
+}
+
+.ai-summary-row {
+    margin-bottom: 3px;
+    line-height: 1.3em;
+}
+
+.ai-summary-key {
+    font-weight: bold;
+    color: #555;
+}
+
+.ai-summary-value {
+    color: #000;
+}
+
+.file-preview-container {
+    position: relative;
+}

@@ -79,23 +79,36 @@ class ActionsIndustria40
             $conf->industria40 = new stdClass();
         }
 
+        // $conf->industria40->dir_output should now be DOL_DATA_ROOT . '/industria40/documents'
+        // due to changes in init.inc.php / modIndustria40.class.php
         if (!isset($conf->industria40->dir_output) || empty($conf->industria40->dir_output)) {
-            $conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40';
+            // Fallback, though init.inc.php should handle this
+            $conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40/documents';
         }
 
         if (!isset($conf->industria40->multidir_output) || empty($conf->industria40->multidir_output)) {
             $conf->industria40->multidir_output = array();
-            $conf->industria40->multidir_output[$conf->entity] = $conf->industria40->dir_output;
+            // Ensure the entity specific path also points to the correct base
+            $current_entity = isset($conf->entity) ? $conf->entity : 1;
+            $conf->industria40->multidir_output[$current_entity] = $conf->industria40->dir_output;
         }
 
-        // Ensure directory exists
+        // Ensure directory exists (points to .../industria40/documents)
         if (!is_dir($conf->industria40->dir_output)) {
-            if (dol_mkdir($conf->industria40->dir_output) >= 0) {
+            // Attempt to create .../industria40 first, then .../industria40/documents
+            $base_module_dir = dirname($conf->industria40->dir_output); // Should be DOL_DATA_ROOT . '/industria40'
+            if (!is_dir($base_module_dir)) {
+                dol_mkdir($base_module_dir, 0775); // Create with 0775
+            }
+            if (dol_mkdir($conf->industria40->dir_output, 0775) >= 0) { // Create with 0775
                 chmod($conf->industria40->dir_output, 0775);
             }
         }
 
         // Set result parameters
+        // $parameters['original_file'] is now SOCID/PERIZIAID/FILENAME
+        // $conf->industria40->dir_output is DOL_DATA_ROOT/industria40/documents
+        // So, fullpath_original becomes DOL_DATA_ROOT/industria40/documents/SOCID/PERIZIAID/FILENAME
         $parameters['accessallowed'] = 1;  // Allow access to file
         $parameters['fullpath_original'] = $conf->industria40->dir_output . '/' . $parameters['original_file'];
 

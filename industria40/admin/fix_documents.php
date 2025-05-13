@@ -51,7 +51,7 @@ if ($action === 'fix') {
     // Impostazione delle costanti
     print '<li>Impostazione delle costanti:</li><ul>';
     $constants = array(
-        'MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT' => 'DOL_DATA_ROOT/industria40',
+        'MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT' => 'DOL_DATA_ROOT/industria40/documents',
         'INDUSTRIA40_ALLOW_EXTERNAL_DOWNLOAD' => '1',
     );
 
@@ -70,7 +70,7 @@ if ($action === 'fix') {
     }
 
     // Imposta directory
-    $conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40';
+    $conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40/documents';
     print '<li>Impostato conf->industria40->dir_output = ' . $conf->industria40->dir_output . '</li>';
 
     if (!isset($conf->industria40->multidir_output)) {
@@ -85,6 +85,8 @@ if ($action === 'fix') {
         DOL_DATA_ROOT . '/industria40/documents',
         DOL_DATA_ROOT . '/industria40/thumbnails',
         DOL_DATA_ROOT . '/industria40/temp',
+        DOL_DATA_ROOT . '/industria40/tags',         // Aggiunto se mancante
+        DOL_DATA_ROOT . '/industria40/descriptions'  // Aggiunto se mancante
     );
 
     print '<li>Creazione delle directory:</li><ul>';

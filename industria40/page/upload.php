@@ -20,9 +20,19 @@ $project = new Industria40Project($db);
 $project->fetch($id);
 
 if ($action == 'upload') {
-    $upload_dir = DOL_DATA_ROOT.'/industria40/'.$project->fk_societe.'/'.$id.'/';
+    // Modifica $upload_dir per essere coerente con file_manager.php e la nuova struttura
+    $upload_dir = DOL_DATA_ROOT.'/industria40/documents/'.$project->fk_societe.'/'.$id.'/';
 
     if (!file_exists($upload_dir)) {
+        // Assicurati che la directory base esista prima di creare quella specifica
+        $base_module_dir = DOL_DATA_ROOT.'/industria40/';
+        $base_documents_dir = DOL_DATA_ROOT.'/industria40/documents/';
+        $base_soc_dir = DOL_DATA_ROOT.'/industria40/documents/'.$project->fk_societe.'/';
+
+        if (!is_dir($base_module_dir)) dol_mkdir($base_module_dir);
+        if (!is_dir($base_documents_dir)) dol_mkdir($base_documents_dir);
+        if (!is_dir($base_soc_dir)) dol_mkdir($base_soc_dir);
+
         dol_mkdir($upload_dir);
     }
 

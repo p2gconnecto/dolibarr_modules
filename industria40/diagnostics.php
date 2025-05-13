@@ -46,7 +46,7 @@ print '</tr>';
 print '<tr>';
 print '<td>MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT</td>';
 print '<td>' . (!empty($conf->global->MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT) ? $conf->global->MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT : '<span class="statuserror">Non definito</span>') . '</td>';
-print '<td>Dovrebbe essere impostato su DOL_DATA_ROOT/industria40</td>';
+print '<td>Dovrebbe essere impostato su DOL_DATA_ROOT/industria40/documents</td>';
 print '</tr>';
 
 // Controlla dir_output
@@ -86,7 +86,8 @@ print '</tr>';
 $directories = array(
     DOL_DATA_ROOT => 'Data Root',
     DOL_DATA_ROOT . '/industria40' => 'Industria40 Root',
-    DOL_DATA_ROOT . '/industria40/documents' => 'Documents',
+    DOL_DATA_ROOT . '/industria40/documents' => 'Documents Root (MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT)',
+    DOL_DATA_ROOT . '/industria40/documents/test' => 'Documents Test Subdirectory',
     DOL_DATA_ROOT . '/industria40/thumbnails' => 'Thumbnails'
 );
 
@@ -139,10 +140,10 @@ if (GETPOST('action') == 'fix_directories') {
         print '<li>Aggiunto industria40 all\'array dei moduli</li>';
     }
 
-    // Imposta la costante del document root se non è già definita
-    if (empty($conf->global->MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT)) {
-        dolibarr_set_const($db, 'MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT', 'DOL_DATA_ROOT/industria40', 'chaine', 0, '', $conf->entity);
-        print '<li>Impostata costante MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT</li>';
+    // Imposta la costante del document root se non è già definita o è errata
+    if (empty($conf->global->MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT) || $conf->global->MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT != 'DOL_DATA_ROOT/industria40/documents') {
+        dolibarr_set_const($db, 'MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT', 'DOL_DATA_ROOT/industria40/documents', 'chaine', 0, '', $conf->entity);
+        print '<li>Impostata costante MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT a DOL_DATA_ROOT/industria40/documents</li>';
     }
 
     // Configura conf->industria40 se non esiste
@@ -152,9 +153,9 @@ if (GETPOST('action') == 'fix_directories') {
     }
 
     // Configura la directory di output
-    if (!isset($conf->industria40->dir_output)) {
-        $conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40';
-        print '<li>Impostato conf->industria40->dir_output</li>';
+    if (!isset($conf->industria40->dir_output) || $conf->industria40->dir_output != DOL_DATA_ROOT . '/industria40/documents') {
+        $conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40/documents';
+        print '<li>Impostato conf->industria40->dir_output a DOL_DATA_ROOT/industria40/documents</li>';
     }
 
     // Configura multidir_output
@@ -174,6 +175,7 @@ if (GETPOST('action') == 'fix_directories') {
     $dirs_to_create = array(
         DOL_DATA_ROOT . '/industria40',
         DOL_DATA_ROOT . '/industria40/documents',
+        DOL_DATA_ROOT . '/industria40/documents/test', // Aggiunta directory di test
         DOL_DATA_ROOT . '/industria40/thumbnails'
     );
 
@@ -210,7 +212,7 @@ print '</form>';
 // Gestisci l'azione di creazione del file di test
 if (GETPOST('action') == 'create_test_file') {
     // Crea una directory e un file di test
-    $test_dir = DOL_DATA_ROOT . '/industria40/documents/test';
+    $test_dir = DOL_DATA_ROOT . '/industria40/documents/test'; // Percorso corretto per la directory di test
     $test_file = $test_dir . '/test_file.txt';
     $test_content = 'Questo è un file di test creato per verificare l\'accesso ai documenti. Timestamp: ' . date('Y-m-d H:i:s');
 
@@ -235,7 +237,7 @@ if (GETPOST('action') == 'create_test_file') {
         print '<p class="ok">File di test creato: ' . $test_file . '</p>';
 
         // Genera l'URL per accedere al file
-        $file_path_relative = 'documents/test/test_file.txt';
+        $file_path_relative = 'test/test_file.txt'; // Relativo a MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT
         $file_url = DOL_URL_ROOT . '/document.php?modulepart=industria40&file=' . urlencode($file_path_relative);
 
         // Aggiungi una sezione di debug più dettagliata
@@ -269,7 +271,7 @@ if (GETPOST('action') == 'create_test_file') {
 
         // Verifica manualmente il percorso del file in multidir_output
         if (isset($conf->industria40->multidir_output[$conf->entity])) {
-            $expected_path = $conf->industria40->multidir_output[$conf->entity] . '/' . $file_path_relative;
+            $expected_path = $conf->industria40->multidir_output[$conf->entity] . '/' . $file_path_relative; // $conf->industria40->multidir_output ora punta a .../documents
             print '<tr><td>Percorso previsto</td><td>' . $expected_path . '</td><td>Basato su multidir_output</td></tr>';
             print '<tr><td>Il file esiste nel percorso previsto</td><td>' . (file_exists($expected_path) ? '<span class="statusok">Sì</span>' : '<span class="statuserror">No</span>') . '</td><td>Verifica basata su multidir_output</td></tr>';
         }
@@ -308,7 +310,7 @@ if (GETPOST('action') == 'create_test_file') {
         // Mostra il codice di esempio per accedere al file
         print '<h4>Esempio di codice per accedere al file:</h4>';
         print '<pre style="background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd;">';
-        print htmlspecialchars('$file_path_relative = \'documents/test/test_file.txt\';
+        print htmlspecialchars('$file_path_relative = \'test/test_file.txt\'; // Relativo alla directory dei documenti del modulo
 $file_url = DOL_URL_ROOT . \'/document.php?modulepart=industria40&file=\' . urlencode($file_path_relative);
 print \'<a href="\' . $file_url . \'" target="_blank">Apri file</a>\';');
         print '</pre>';
@@ -330,7 +332,7 @@ print '<input type="hidden" name="action" value="test_document">';
 print '<table class="noborder">';
 print '<tr class="liste_titre"><td colspan="2">Test parametri document.php</td></tr>';
 print '<tr><td>modulepart</td><td><input type="text" name="test_modulepart" value="industria40"></td></tr>';
-print '<tr><td>file</td><td><input type="text" name="test_file" value="documents/test/test_file.txt"></td></tr>';
+print '<tr><td>file</td><td><input type="text" name="test_file" value="test/test_file.txt"></td></tr>';
 print '<tr><td>entity</td><td><input type="text" name="test_entity" value="' . $conf->entity . '"></td></tr>';
 print '<tr><td>attachment</td><td><input type="checkbox" name="test_attachment" value="1"> (force download)</td></tr>';
 print '<tr><td></td><td><input type="submit" class="button" value="Testa document.php"></td></tr>';
@@ -384,6 +386,7 @@ if (GETPOST('action') == 'reinstall_module') {
     $dirs_to_create = array(
         DOL_DATA_ROOT . '/industria40',
         DOL_DATA_ROOT . '/industria40/documents',
+        DOL_DATA_ROOT . '/industria40/documents/test',
         DOL_DATA_ROOT . '/industria40/thumbnails'
     );
 
@@ -402,7 +405,7 @@ if (GETPOST('action') == 'reinstall_module') {
     }
 
     // Imposta esplicitamente le costanti del modulo
-    dolibarr_set_const($db, 'MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT', 'DOL_DATA_ROOT/industria40', 'chaine', 0, '', $conf->entity);
+    dolibarr_set_const($db, 'MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT', 'DOL_DATA_ROOT/industria40/documents', 'chaine', 0, '', $conf->entity);
     print '<li>Impostata la costante MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT</li>';
 
     // Imposta il flag per permettere l'accesso esterno
@@ -413,7 +416,7 @@ if (GETPOST('action') == 'reinstall_module') {
     if (!isset($conf->industria40)) {
         $conf->industria40 = new stdClass();
     }
-    $conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40';
+    $conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40/documents';
 
     if (!isset($conf->industria40->multidir_output)) {
         $conf->industria40->multidir_output = array();

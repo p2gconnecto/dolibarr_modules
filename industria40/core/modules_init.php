@@ -14,7 +14,7 @@ if (!isset($conf->industria40)) {
 }
 
 // Imposta la directory di output del modulo
-$conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40';
+$conf->industria40->dir_output = DOL_DATA_ROOT . '/industria40/documents';
 
 // Inizializza l'array multidir_output se non esiste
 if (!isset($conf->industria40->multidir_output)) {
@@ -26,12 +26,14 @@ $conf->industria40->multidir_output[$conf->entity] = $conf->industria40->dir_out
 
 // Crea le directory necessarie se non esistono
 $dirs_to_create = array(
-    DOL_DATA_ROOT . '/industria40',
-    DOL_DATA_ROOT . '/industria40/documents',
+    DOL_DATA_ROOT . '/industria40', // Directory base del modulo
+    DOL_DATA_ROOT . '/industria40/documents', // Directory dei documenti principali
     DOL_DATA_ROOT . '/industria40/thumbnails',
     DOL_DATA_ROOT . '/industria40/temp',
     DOL_DATA_ROOT . '/industria40/tags',
-    DOL_DATA_ROOT . '/industria40/descriptions'
+    DOL_DATA_ROOT . '/industria40/descriptions',
+    DOL_DATA_ROOT . '/industria40/ai_responses', // Aggiunta directory per le risposte AI
+    DOL_DATA_ROOT . '/industria40/ocr' // Aggiunta directory per i dati OCR
 );
 
 foreach ($dirs_to_create as $dir) {

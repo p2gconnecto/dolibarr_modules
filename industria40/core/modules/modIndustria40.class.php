@@ -31,285 +31,163 @@ include_once DOL_DOCUMENT_ROOT.'/core/modules/DolibarrModules.class.php';
  */
 class modIndustria40 extends DolibarrModules
 {
-    /**
-     * Constructor. Define names, constants, directories, boxes, permissions
-     *
-     * @param DoliDB $db Database handler
-     */
-    public function __construct($db)
-    {
-        global $langs, $conf;
-        $this->db = $db;
+	public $module_parts = array(
+		'triggers' => 0,
+		'login' => 0,
+		'substitutions' => 0,
+		'models' => 0,
+		'menus' => 0,
+		'theme' => 0,
+		'tpl' => 0,
+		'barcode' => 0,
+		'dir' => array('output' => 'industria40/documents'), // Percorso relativo per la directory dei documenti del modulo
+		'moduleforexternal' => 0,
+		'document' => 1 // Abilita la gestione documentale per il modulo
+	);
 
-        // Id for module (must be unique).
-        $this->numero = 436996;
+	/**
+	 * Constructor. Define names, constants, directories, boxes, permissions
+	 *
+	 * @param DoliDB $db Database handler
+	 */
+	public function __construct($db)
+	{
+		global $conf, $langs;
 
-        // Key text used to identify module (for permissions, menus, etc...)
-        $this->rights_class = 'industria40';
+		$this->db = $db;
 
-        // Family can be 'base' (core modules),'crm','financial','hr','projects','products','ecm','technic' (transverse modules),'interface' (link with external tools),'other','...'
-        $this->family = "other";
+		// Module configuration
+		$this->numero = 100000; // Numero univoco del modulo (da cambiare)
+		$this->rights_class = 'industria40'; // Classe per i permessi (nome del modulo)
+		$this->family = "projects"; // Famiglia del modulo
+		$this->module_position = 50; // Posizione del modulo nel menu
 
-        // Module position in the family on 2 digits ('01', '10', '20', ...)
-        $this->module_position = '90';
+		// Module name (no space, no special chars, same as module directory name)
+		$this->name = preg_replace('/^mod/i', '', get_class($this));
+		$this->description = $langs->trans("Industria40ModuleDescription"); // Descrizione del modulo
+		$this->version = '1.0.0'; // Versione del modulo
+		$this->editor_name = 'Your Name/Company'; // Nome dello sviluppatore
+		$this->editor_url = 'https://yourwebsite.com'; // URL dello sviluppatore
 
-        // Gives the possibility for the module, to provide his own family info and position of this family
-        $this->familyinfo = array('Your customized groups' => array('position' => '01', 'label' => $langs->trans("MyModuleFamily")));
+		// Module parts (triggers, login, substitutions, models, menus, theme, tpl, barcode, dir)
+		// Questa è già definita come proprietà della classe, assicurati che sia completa lì.
+		// Se necessario, può essere modificata qui prima di parent::__construct().
 
-        // Module label (no space allowed), used if translation string 'ModuleIndustria40Name' not found (Industria40 is name of module).
-        $this->name = preg_replace('/^mod/i', '', get_class($this));
+		// Data directories to create when module is enabled.
+		// These paths are relative to DOL_DATA_ROOT.
+		$this->dirs = array(
+			// La directory principale dei documenti (DOL_DATA_ROOT/industria40/documents)
+			// dovrebbe essere gestita dal framework basandosi su $this->module_parts['dir']['output'].
+			// Sottodirectory aggiuntive possono essere elencate qui se necessario.
+			'/industria40/thumbnails', // Esempio per le miniature
+			'/industria40/temp'        // Esempio per file temporanei
+		);
 
-        // Module description, used if translation string 'ModuleIndustria40Desc' not found
-        $this->description = "Industria 4.0 Management";
-        // Used only if file README.md and README-LL.md not found.
-        $this->descriptionlong = "Industria 4.0 management module for technical analysis and appraisal";
+		// Module constants
+		$this->const = array();
+		$this->const[] = array(
+			'MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT',
+			'chaine',
+			'DOL_DATA_ROOT/industria40/documents', // Valore letterale, DOL_DATA_ROOT sarà sostituito
+			'Document root for Industria40 module',
+			0,
+			'current',
+			0
+		);
+		$this->const[] = array(
+			'INDUSTRIA40_ALLOW_EXTERNAL_DOWNLOAD',
+			'chaine',
+			'1',
+			'Allow external download of documents',
+			0,
+			'current',
+			0
+		);
 
-        // Author
-        $this->editor_name = 'Your Company';
-        $this->editor_url = 'https://www.example.com';
 
-        // Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
-        $this->version = '1.0.0';
+		// Boxes
+		$this->boxes = array();
 
-        // Keyword of module visible in Setup->Modules, Help and URLs
-        $this->keywords = array('industria40', 'technical analysis', 'perizia');
+		// Permissions
+		$this->rights = array();
+		$this->rights[0][0] = $this->numero + 1;
+		$this->rights[0][1] = $langs->trans('ReadIndustria40'); // Permesso di lettura
+		$this->rights[0][3] = 1; // Attivo per impostazione predefinita
+		$this->rights[0][4] = 'lire'; // Tipo di permesso (lettura). Usare $user->rights->industria40->lire per controllare questo permesso.
 
-        // Define module parts (triggers, login, substitutions, menus, css, etc...)
-        $this->module_parts = array(
-            'triggers' => 0,                // Set this to 1 if module has its own trigger directory
-            'login' => 0,                   // Set this to 1 if module has its own login page
-            'substitutions' => 0,           // Set this to 1 if module has its own substitution function file
-            'models' => 0,                  // Set this to 1 if module has its own models directory for pdf documents
-            'menus' => 0,                   // Set this to 1 if module has its own menus handler directory
-            'theme' => 0,                   // Set this to 1 if module has its own theme directory
-            'tpl' => 0,                     // Set this to 1 if module overrides template dir
-            'barcode' => 0,                 // Set this to 1 if module wants to scan barcode
-            'dir' => array('output' => 'custom/industria40/documents'), // Set this to relative path if module has its own document directory
-            'moduleforexternal' => 0
-        );
+		$this->rights[1][0] = $this->numero + 2;
+		$this->rights[1][1] = $langs->trans('WriteIndustria40'); // Permesso di scrittura
+		$this->rights[1][3] = 0; // Non attivo per impostazione predefinita
+		$this->rights[1][4] = 'ecrire'; // Tipo di permesso (scrittura). Usare $user->rights->industria40->ecrire per controllare questo permesso.
 
-        // Data directories to create when module is enabled.
-        $this->dirs = array(
-            '/industria40/documents',
-            '/industria40/generated'
-        );
+		// Menus
+		$this->menus = array(); // Vedi hooks/admin.php per la gestione dei menu
 
-        // Config pages. Put here list of php page, stored into your module's directory.
-        $this->config_page_url = array("setup.php@industria40");
+		parent::__construct($db);
+	}
 
-        // Dependencies
-        $this->hidden = false;                      // A condition to hide module
-        $this->depends = array();                   // List of module class names as string that must be enabled if this module is enabled
-        $this->requiredby = array();                // List of module ids to disable if this one is disabled
-        $this->conflictwith = array();              // List of module class names as string this module is in conflict with
-        $this->langfiles = array("industria40@industria40");
+	/**
+	 * Init function. Called when module is enabled.
+	 * The init function add constants, boxes, permissions and menus (defined in constructor) into Dolibarr database.
+	 * It also creates data directories
+	 *
+	 * @param string $options Options when enabling module ('', 'noboxes')
+	 * @return int 1 if OK, 0 if KO
+	 */
+	public function init($options = '')
+	{
+		global $conf, $langs, $db; // $db è disponibile qui
 
-        // Constants
-        $this->const = array();
+		// Chiama l'init del genitore per caricare costanti, ecc.
+		$result = parent::init($options);
 
-        // Arrays to init labels of major actions
-        $this->tabs = array();
-        $this->tabs[] = array('data'=>'thirdparty:+industria40:Industria40:industria40@industria40:$user->rights->industria40->read:/custom/industria40/industria40index.php?socid=__ID__');
+		if ($result > 0) {
+			// Crea le directory necessarie con i permessi corretti.
+			// La directory principale dei documenti del modulo (DOL_DATA_ROOT/industria40/documents)
+			// dovrebbe essere creata dal framework basandosi su $this->module_parts['dir']['output']
+			// e $this->module_parts['document'] = 1.
+			// Tuttavia, una creazione esplicita qui può fungere da fallback.
 
-        // Boxes/Widgets
-        $this->boxes = array();
+			// Assicurati che la directory base del modulo esista
+			if (!is_dir(DOL_DATA_ROOT.'/industria40')) {
+				dol_mkdir(DOL_DATA_ROOT.'/industria40', dolibarr_get_default_PERM_DIRS());
+			}
+			// Assicurati che la directory principale dei documenti per il modulo esista
+			if (!is_dir(DOL_DATA_ROOT.'/industria40/documents')) {
+				dol_mkdir(DOL_DATA_ROOT.'/industria40/documents', dolibarr_get_default_PERM_DIRS());
+			}
 
-        // Permissions
-        $this->rights = array();
-        $r = 0;
+			// Crea altre directory definite nella proprietà $this->dirs
+			// La logica di creazione delle directory in $this->dirs è gestita da parent::init()
+			// ma possiamo aggiungere qui ulteriori directory specifiche se necessario.
+			$additional_dirs_to_ensure = array(
+				DOL_DATA_ROOT.'/industria40/thumbnails',
+				DOL_DATA_ROOT.'/industria40/temp'
+				// Aggiungi altre directory qui se non sono coperte da $this->dirs
+				// o se richiedono una logica di creazione speciale.
+			);
 
-        // Permission ID (must be unique and starting from 1 for each module)
-        $this->rights[$r][0] = $this->numero + $r + 1;
-        // Permission label
-        $this->rights[$r][1] = 'Read Industria 4.0 data';
-        // Permission by default for new user (0/1)
-        $this->rights[$r][3] = 1;
-        // Permission for what (in Dolibarr code)
-        $this->rights[$r][4] = 'read';
-        // Permission for what level (in Dolibarr code)
-        $this->rights[$r][5] = '';
-        $r++;
+			foreach ($additional_dirs_to_ensure as $dir_path) {
+				if (!is_dir($dir_path)) {
+					dol_mkdir($dir_path, dolibarr_get_default_PERM_DIRS());
+				}
+			}
+		}
 
-        // Permission ID (must be unique and incrementing)
-        $this->rights[$r][0] = $this->numero + $r + 1;
-        // Permission label
-        $this->rights[$r][1] = 'Create/modify Industria 4.0 data';
-        // Permission by default for new user (0/1) - CHANGE THIS TO 1
-        $this->rights[$r][3] = 1; // Changed from 0 to 1 to enable by default
-        // Permission for what (in Dolibarr code)
-        $this->rights[$r][4] = 'write';
-        // Permission for what level (in Dolibarr code)
-        $this->rights[$r][5] = '';
-        $r++;
+		return $result;
+	}
 
-        // Permission ID (must be unique and incrementing)
-        $this->rights[$r][0] = $this->numero + $r + 1;
-        // Permission label
-        $this->rights[$r][1] = 'Delete Industria 4.0 data';
-        // Permission by default for new user (0/1)
-        $this->rights[$r][3] = 0;
-        // Permission for what (in Dolibarr code)
-        $this->rights[$r][4] = 'delete';
-        // Permission for what level (in Dolibarr code)
-        $this->rights[$r][5] = '';
-        $r++;
-
-        // Main menu entries
-        $this->menu = array();
-        $r = 0;
-
-        // Add main menu entry
-        $this->menu[$r++] = array(
-            'fk_menu' => 'fk_mainmenu=tools',
-            'type' => 'left',
-            'titre' => 'Industria 4.0',
-            'prefix' => img_picto('', 'title_generic.png@industria40', 'class="pictofixedwidth"'),
-            'mainmenu' => 'tools',
-            'leftmenu' => 'industria40',
-            'url' => '/custom/industria40/page/list.php',
-            'langs' => 'industria40@industria40',
-            'position' => 100+$r,
-            'enabled' => '$conf->industria40->enabled',
-            'perms' => '$user->rights->industria40->read',
-            'target' => '',
-            'user' => 0,
-        );
-
-        // Add secondary menu entries
-        $this->menu[$r++] = array(
-            'fk_menu' => 'fk_mainmenu=tools,fk_leftmenu=industria40',
-            'type' => 'left',
-            'titre' => 'List',
-            'url' => '/custom/industria40/page/list.php',
-            'langs' => 'industria40@industria40',
-            'position' => 100+$r,
-            'enabled' => '$conf->industria40->enabled',
-            'perms' => '$user->rights->industria40->read',
-            'target' => '',
-            'user' => 0,
-        );
-
-        // Add secondary menu entry for creating new project
-        $this->menu[$r++] = array(
-            'fk_menu' => 'fk_mainmenu=tools,fk_leftmenu=industria40',
-            'type' => 'left',
-            'titre' => 'New',
-            'url' => '/custom/industria40/page/card.php?action=create',
-            'langs' => 'industria40@industria40',
-            'position' => 100+$r,
-            'enabled' => '$conf->industria40->enabled',
-            'perms' => '$user->rights->industria40->write',
-            'target' => '',
-            'user' => 0,
-        );
-    }
-
-    /**
-     * Function called when module is enabled.
-     * The init function add constants, boxes, permissions and menus (defined in constructor) into Dolibarr database.
-     * It also creates data directories
-     *
-     * @param string $options   Options when enabling module ('', 'noboxes')
-     * @return int              1 if OK, 0 if KO
-     */
-    public function init($options = '')
-    {
-        $result = $this->_load_tables('/industria40/sql/');
-        if ($result < 0) {
-            return -1; // Do not activate module if error 'not allowed' returned when loading module SQL queries (the _load_table run sql with run_sql with the error allowed parameter set to 'default')
-        }
-
-        // Permissions
-        $this->remove($options);
-
-        $sql = array();
-
-        // Register the module for document management
-        $this->const[] = array(
-            'MAIN_MODULE_INDUSTRIA40_DOCUMENT_ROOT',
-            'chaine',
-            'DOL_DATA_ROOT/industria40',
-            'Document root for Industria40 module',
-            0,
-            'current',
-            0
-        );
-
-        // Aggiungi costanti necessarie per l'accesso ai documenti
-        $this->const[] = array(
-            'MAIN_UMASK',
-            'chaine',
-            '0666',
-            'Permessi predefiniti per i file',
-            0,
-            'current',
-            0
-        );
-
-        $this->const[] = array(
-            'INDUSTRIA40_ALLOW_EXTERNAL_DOWNLOAD',
-            'chaine',
-            '1',
-            'Permetti accesso ai documenti tramite document.php',
-            0,
-            'current',
-            0
-        );
-
-        // Aggiorna la configurazione module_parts
-        $this->module_parts = array(
-            'triggers' => 0,                // Set this to 1 if module has its own trigger directory
-            'login' => 0,                   // Set this to 1 if module has its own login page
-            'substitutions' => 0,           // Set this to 1 if module has its own substitution function file
-            'models' => 0,                  // Set this to 1 if module has its own models directory for pdf documents
-            'menus' => 0,                   // Set this to 1 if module has its own menus handler directory
-            'theme' => 0,                   // Set this to 1 if module has its own theme directory
-            'tpl' => 0,                     // Set this to 1 if module overrides template dir
-            'barcode' => 0,                 // Set this to 1 if module wants to scan barcode
-            // Definizione corretta per il supporto documenti
-            'dir' => array('output' => 'industria40'),
-            'moduleforexternal' => 0,
-            'document' => 1                 // Set to 1 to enable document management
-        );
-
-        $result = $this->_init($sql, $options);
-
-        if ($result > 0) {
-            // Crea le directory necessarie con i permessi corretti
-            $dirs = array(
-                DOL_DATA_ROOT.'/industria40',
-                DOL_DATA_ROOT.'/industria40/documents',
-                DOL_DATA_ROOT.'/industria40/thumbnails'
-            );
-
-            foreach ($dirs as $dir) {
-                if (!is_dir($dir)) {
-                    if (dol_mkdir($dir, 0775) > 0) {
-                        // Cambia esplicitamente i permessi per assicurarsi che siano corretti
-                        chmod($dir, 0775);
-                        dol_syslog("modIndustria40: Created directory ".$dir, LOG_DEBUG);
-                    }
-                } else {
-                    // Aggiorna i permessi delle directory esistenti
-                    chmod($dir, 0775);
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Function called when module is disabled.
-     * Remove from database constants, boxes and permissions from Dolibarr database.
-     * Data directories are not deleted
-     *
-     * @param string $options   Options when enabling module ('', 'noboxes')
-     * @return int              1 if OK, 0 if KO
-     */
-    public function remove($options = '')
-    {
-        $sql = array();
-        return $this->_remove($sql, $options);
-    }
+	/**
+	 * Function called when module is disabled.
+	 * Remove from database constants, boxes and permissions from Dolibarr database.
+	 * Data directories are not deleted
+	 *
+	 * @param string $options   Options when enabling module ('', 'noboxes')
+	 * @return int              1 if OK, 0 if KO
+	 */
+	public function remove($options = '')
+	{
+		$sql = array();
+		return $this->_remove($sql, $options);
+	}
 }
