@@ -8,7 +8,7 @@ if ($action == 'rename_files') {
     if (!$user->rights->industria40->write && !$user->admin) {
         setEventMessages($langs->trans("NoPermissionToWrite"), null, 'errors');
     } else {
-        dol_syslog("file_manager_manage_view.php: Handling action 'rename_files'", LOG_DEBUG);
+        //dol_syslog("file_manager_manage_view.php: Handling action 'rename_files'", LOG_DEBUG);
         $single_file_rename = GETPOST('rename_single_file', 'alpha');
 
         if (!empty($single_file_rename)) {
@@ -16,7 +16,7 @@ if ($action == 'rename_files') {
             $key_post_new_name = 'new_name_' . $original_name; // Key used in POST from the text input
             $new_name_val = GETPOST($key_post_new_name, 'alpha');
 
-            dol_syslog("file_manager_manage_view.php: Attempting to rename '$original_name' to '$new_name_val'", LOG_DEBUG);
+            //dol_syslog("file_manager_manage_view.php: Attempting to rename '$original_name' to '$new_name_val'", LOG_DEBUG);
             $sanitized_new_name = dol_sanitizeFileName($new_name_val);
             // Ensure $upload_dir has a trailing slash
             $upload_dir_path_rs = rtrim($upload_dir, '/') . '/';
@@ -106,7 +106,7 @@ if ($action == 'rename_files') {
      if (!$user->rights->industria40->delete && !$user->admin) {
         setEventMessages($langs->trans("NoPermissionToDelete"), null, 'errors');
     } else {
-        dol_syslog("file_manager_manage_view.php: Handling action 'remove_all_files'", LOG_DEBUG);
+        //dol_syslog("file_manager_manage_view.php: Handling action 'remove_all_files'", LOG_DEBUG);
         $files_removed_count = 0; $files_failed_count = 0;
         $upload_dir_path_ra = rtrim($upload_dir, '/') . '/';
         if (is_dir($upload_dir_path_ra)) {
@@ -211,7 +211,7 @@ $upload_dir_path_m = rtrim($upload_dir, '/') . '/'; // Ensure trailing slash
 if (is_dir($upload_dir_path_m)) {
     $files_m = scandir($upload_dir_path_m);
     foreach ($files_m as $file_m) {
-        if ($file_m != '.' && $file_m != '..' && !preg_match('/\.(txt)$/i', $file_m)) {
+        if ($file_m != '.' && $file_m != '..' && !preg_match('/\.(json)$/i', $file_m)) {
             $files_exist_m = true;
             $file_path_relative_m = 'documents/' . $socid . '/' . $periziaid_sanitized . '/' . $file_m;
             $file_full_path_m = $upload_dir_path_m . $file_m;
@@ -377,7 +377,7 @@ print '</div>'; // End filePreview div
  * @return void
  */
 function update_file_references($socid, $perizia_sanitized, $old_name, $new_name) {
-    dol_syslog("update_file_references: Updating references from '$old_name' to '$new_name'", LOG_DEBUG);
+    //dol_syslog("update_file_references: Updating references from '$old_name' to '$new_name'", LOG_DEBUG);
 
     // Update tags
     $old_file_key = $socid . '_' . $periziaid_sanitized . '_' . $old_name;
@@ -391,7 +391,7 @@ function update_file_references($socid, $perizia_sanitized, $old_name, $new_name
             $tags_data[$new_file_key] = $tags_data[$old_file_key];
             unset($tags_data[$old_file_key]);
             file_put_contents($tags_file, json_encode($tags_data));
-            dol_syslog("update_file_references: Updated tag reference", LOG_DEBUG);
+            //dol_syslog("update_file_references: Updated tag reference", LOG_DEBUG);
         }
     }
 
@@ -404,18 +404,18 @@ function update_file_references($socid, $perizia_sanitized, $old_name, $new_name
             $desc_data[$new_file_key] = $desc_data[$old_file_key];
             unset($desc_data[$old_file_key]);
             file_put_contents($desc_file, json_encode($desc_data));
-            dol_syslog("update_file_references: Updated description reference", LOG_DEBUG);
+            //dol_syslog("update_file_references: Updated description reference", LOG_DEBUG);
         }
     }
 
     // Update AI responses (move files)
     $ai_response_dir = DOL_DATA_ROOT . '/industria40/ai_responses';
-    $old_response_file = $ai_response_dir . '/' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $old_file_key) . '.txt';
-    $new_response_file = $ai_response_dir . '/' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $new_file_key) . '.txt';
+    $old_response_file = $ai_response_dir . '/' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $old_file_key) . '.json';
+    $new_response_file = $ai_response_dir . '/' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $new_file_key) . '.json';
 
     if (file_exists($old_response_file)) {
         rename($old_response_file, $new_response_file);
-        dol_syslog("update_file_references: Renamed AI response file", LOG_DEBUG);
+        //dol_syslog("update_file_references: Renamed AI response file", LOG_DEBUG);
     }
 
     // Update summary files too
@@ -424,7 +424,7 @@ function update_file_references($socid, $perizia_sanitized, $old_name, $new_name
 
     if (file_exists($old_summary_file)) {
         rename($old_summary_file, $new_summary_file);
-        dol_syslog("update_file_references: Renamed AI summary file", LOG_DEBUG);
+        //dol_syslog("update_file_references: Renamed AI summary file", LOG_DEBUG);
     }
 
     // Update OCR data (which uses MD5 of file path)
@@ -439,6 +439,449 @@ function update_file_references($socid, $perizia_sanitized, $old_name, $new_name
 
     if (file_exists($old_ocr_file)) {
         rename($old_ocr_file, $new_ocr_file);
-        dol_syslog("update_file_references: Renamed OCR file", LOG_DEBUG);
+        //dol_syslog("update_file_references: Renamed OCR file", LOG_DEBUG);
     }
+}
+
+
+/**
+ * Remove all data associated with a file
+ *
+ * @param int $socid Society ID
+ * @param string $perizia_sanitized The sanitized perizia ID
+ * @param string $file_name The file name
+ * @param string $upload_dir_path Base upload directory path
+ * @return void
+ */
+function remove_associated_file_data($socid, $perizia_sanitized, $file_name, $upload_dir_path) {
+    // Log l'inizio dell'operazione
+    dol_syslog("remove_associated_file_data: Removing all data for file '$file_name'", LOG_DEBUG);
+
+    // Usa la variabile locale $perizia_sanitized passata come parametro anziché $periziaid_sanitized globale
+    $file_key = $socid . '_' . $perizia_sanitized . '_' . $file_name;
+
+    // 1. Elimina le miniature
+    $thumb_dir = DOL_DATA_ROOT . '/industria40/thumbnails/' . $socid . '/' . $perizia_sanitized;
+    $thumb_file = $thumb_dir . '/thumb_' . pathinfo($file_name, PATHINFO_FILENAME) . '.jpg';
+
+    if (file_exists($thumb_file)) {
+        if (unlink($thumb_file)) {
+            dol_syslog("remove_associated_file_data: Removed thumbnail for '$file_name'", LOG_DEBUG);
+        } else {
+            dol_syslog("remove_associated_file_data: Failed to remove thumbnail for '$file_name'", LOG_WARNING);
+        }
+    }
+
+    // 2. Elimina le risposte AI e i file di sommario
+    $ai_response_dir = DOL_DATA_ROOT . '/industria40/ai_responses';
+    $response_files = [
+        $ai_response_dir . '/' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $file_key) . '.txt',  // Risposta principale
+        $ai_response_dir . '/' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $file_key) . '_summary.txt',  // File di sommario
+        $ai_response_dir . '/' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $file_key) . '.json'  // Possibili file JSON legacy
+    ];
+
+    foreach ($response_files as $response_file) {
+        if (file_exists($response_file)) {
+            if (unlink($response_file)) {
+                dol_syslog("remove_associated_file_data: Removed AI response file '$response_file'", LOG_DEBUG);
+            } else {
+                dol_syslog("remove_associated_file_data: Failed to remove AI response file '$response_file'", LOG_WARNING);
+            }
+        }
+    }
+
+    // 3. Elimina i dati OCR
+    $ocr_dir = DOL_DATA_ROOT . '/industria40/ocr';
+    $file_path = $upload_dir_path . $file_name;
+    $ocr_file = $ocr_dir . '/' . md5($file_path) . '.txt';
+
+    if (file_exists($ocr_file)) {
+        if (unlink($ocr_file)) {
+            dol_syslog("remove_associated_file_data: Removed OCR file for '$file_name'", LOG_DEBUG);
+        } else {
+            dol_syslog("remove_associated_file_data: Failed to remove OCR file for '$file_name'", LOG_WARNING);
+        }
+    }
+
+    // 4. Rimuovi i tag
+    $tags_dir = DOL_DATA_ROOT . '/industria40/tags';
+    $tags_file = $tags_dir . '/file_tags.json';
+    if (file_exists($tags_file)) {
+        $tags_data = json_decode(file_get_contents($tags_file), true);
+        if (is_array($tags_data) && isset($tags_data[$file_key])) {
+            unset($tags_data[$file_key]);
+            file_put_contents($tags_file, json_encode($tags_data));
+            dol_syslog("remove_associated_file_data: Removed tag reference for '$file_name'", LOG_DEBUG);
+        }
+    }
+
+    // 5. Rimuovi le descrizioni
+    $desc_dir = DOL_DATA_ROOT . '/industria40/descriptions';
+    $desc_file = $desc_dir . '/file_descriptions.json';
+    if (file_exists($desc_file)) {
+        $desc_data = json_decode(file_get_contents($desc_file), true);
+        if (is_array($desc_data) && isset($desc_data[$file_key])) {
+            unset($desc_data[$file_key]);
+            file_put_contents($desc_file, json_encode($desc_data));
+            dol_syslog("remove_associated_file_data: Removed description for '$file_name'", LOG_DEBUG);
+        }
+    }
+
+    dol_syslog("remove_associated_file_data: Completed removal of all associated data for '$file_name'", LOG_DEBUG);
+}
+
+// Codice per verificare e generare descrizioni AI per tutti i file nella vista
+if (is_dir($upload_dir_path_m)) {
+    $files_m = scandir($upload_dir_path_m);
+    $ai_generation_requests = 0;
+
+    foreach ($files_m as $file_m) {
+        if ($file_m != '.' && $file_m != '..' && !preg_match('/\.(json)$/i', $file_m)) {
+            $file_extension_m = strtolower(pathinfo($file_m, PATHINFO_EXTENSION));
+            // Verifica se è un tipo di file supportato per l'analisi AI
+            if (in_array($file_extension_m, array('jpg', 'jpeg', 'png', 'gif', 'pdf'))) {
+                $file_key_m = $socid . '_' . $periziaid_sanitized . '_' . $file_m;
+
+                // Verifica se esiste già una descrizione AI
+                $ai_description_m = get_stored_ai_response($file_key_m);
+                if ($ai_description_m === false) {
+                    // Se non esiste, avvia la generazione
+                    if (check_and_generate_ai_description($file_m, $socid, $periziaid_sanitized, $upload_dir_path_m)) {
+                        $ai_generation_requests++;
+                    }
+
+                    // Limita il numero di richieste per evitare sovraccarico
+                    if ($ai_generation_requests >= 1) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // Se sono state avviate richieste di generazione AI, mostra un messaggio
+    if ($ai_generation_requests > 0) {
+        setEventMessages($langs->trans("AIDescriptionGenerationStarted", $ai_generation_requests), null, 'mesgs');
+    }
+}
+
+// Aggiungi JavaScript per ricaricare la pagina dopo un po' se ci sono richieste AI in corso
+if (isset($ai_generation_requests) && $ai_generation_requests > 0) {
+    print '<script>
+    // Ricarica la pagina dopo 45 secondi per mostrare le descrizioni generate
+    setTimeout(function() {
+        window.location.reload();
+    }, 45000);
+    </script>';
+}
+
+// Verifica lo stato delle descrizioni AI e mostra un messaggio se ci sono file in attesa di elaborazione
+$pending_ai_files = [];
+if (is_dir($upload_dir_path_m)) {
+    $files_m = scandir($upload_dir_path_m);
+    foreach ($files_m as $file_m) {
+        if ($file_m != '.' && $file_m != '..' && !preg_match('/\.(json)$/i', $file_m)) {
+            $file_key_m = $socid . '_' . $periziaid_sanitized . '_' . $file_m;
+            $ai_description_m = get_stored_ai_response($file_key_m);
+
+            // Se la descrizione AI è in stato "in attesa" (file .txt mancante)
+            if ($ai_description_m === false) {
+                $pending_ai_files[] = $file_m;
+            }
+        }
+    }
+}
+
+if (count($pending_ai_files) > 0) {
+    $file_list = implode(', ', array_map('dol_escape_htmltag', $pending_ai_files));
+    setEventMessages($langs->trans("AIDescriptionsPendingForFiles", $file_list), null, 'warnings');
+
+    // Aggiungi un log di sistema con una chiave specifica per il debug
+    dol_syslog("DEBUG_AI_ISSUE: Pending AI files: " . $file_list, LOG_WARNING);
+
+    // Aggiungi console.log JavaScript per verificare cosa succede nel browser
+    print '<script>
+    console.log("DEBUG_AI_ISSUE: Pending AI files detected in page:", ' . json_encode($pending_ai_files) . ');
+    </script>';
+} else {
+    dol_syslog("file_manager_manage_view.php: Checking AI description status", LOG_DEBUG);
+    dol_syslog("DEBUG_AI_ISSUE: No pending AI files", LOG_DEBUG);
+
+    // Console log anche quando non ci sono file in attesa
+    print '<script>
+    console.log("DEBUG_AI_ISSUE: No pending AI files detected");
+    </script>';
+}
+
+// Modifica alla funzione check_and_generate_ai_description per aggiungere più log
+function check_and_generate_ai_description($file_name, $socid, $periziaid_sanitized, $upload_dir_path) {
+    global $langs, $conf, $db, $user;
+
+    $file_key = $socid . '_' . $periziaid_sanitized . '_' . $file_name;
+    $file_full_path = $upload_dir_path . $file_name;
+    $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+    dol_syslog("DEBUG_AI_ISSUE: Checking AI description for file: " . $file_name, LOG_DEBUG);
+
+    // Verifica se esiste già una descrizione AI
+    $ai_description = get_stored_ai_response($file_key);
+    if ($ai_description !== false) {
+        dol_syslog("DEBUG_AI_ISSUE: AI description already exists for: " . $file_name, LOG_DEBUG);
+        return false; // Descrizione già esistente
+    }
+
+    dol_syslog("DEBUG_AI_ISSUE: No AI description found for: " . $file_name, LOG_DEBUG);
+
+    // Verifica se il file è di un formato supportato
+    if (!in_array($file_extension, array('jpg', 'jpeg', 'png', 'gif', 'pdf'))) {
+        dol_syslog("DEBUG_AI_ISSUE: Unsupported file format: " . $file_extension, LOG_WARNING);
+        return false; // Formato file non supportato
+    }
+
+    // Aggiungi log per mostrare i parametri della richiesta
+    dol_syslog("DEBUG_AI_ISSUE: Preparing AI request for socid=" . $socid . ", perizia=" . $periziaid_sanitized . ", file=" . $file_name, LOG_DEBUG);
+
+    // Invece di fare una chiamata CURL, elabora direttamente la richiesta
+    // Prova ad includere e chiamare direttamente le funzioni in async_ai_processor.php
+    try {
+        // Prepara i parametri che sarebbero stati inviati tramite POST
+        $_POST['aiai_action'] = 'generate_description';
+        $_POST['socid'] = $socid;
+        $_POST['perizia_id'] = $periziaid_sanitized;
+        $_POST['file_name'] = $file_name;
+
+        dol_syslog("DEBUG_AI_ISSUE: Trying direct processing instead of CURL", LOG_DEBUG);
+
+        // Verifica se esiste il file di ambiente con la chiave API OpenAI
+        if (!file_exists(__DIR__ . '/.env')) {
+            dol_syslog("DEBUG_AI_ISSUE: .env file not found", LOG_ERR);
+            writeToLog("Errore: File .env con chiave API OpenAI non trovato", $file_key);
+            return false;
+        }
+
+        // Esegui direttamente l'elaborazione
+        $response = direct_process_ai_request($socid, $periziaid_sanitized, $file_name, $file_full_path);
+
+        dol_syslog("DEBUG_AI_ISSUE: Direct processing response: " . ($response ? "Success" : "Failed"), LOG_DEBUG);
+        writeToLog("Elaborazione diretta descrizione AI: " . ($response ? "Completata" : "Fallita"), $file_key);
+
+        return $response;
+    } catch (Exception $e) {
+        dol_syslog("DEBUG_AI_ISSUE: Direct processing error: " . $e->getMessage(), LOG_ERR);
+        writeToLog("Errore nell'elaborazione diretta: " . $e->getMessage(), $file_key);
+        return false;
+    }
+}
+
+/**
+ * Process AI request directly without CURL
+ *
+ * @param int $socid Society ID
+ * @param string $perizia_id Perizia ID
+ * @param string $file_name File name
+ * @param string $file_path Full file path
+ * @return bool Success or failure
+ */
+function direct_process_ai_request($socid, $perizia_id, $file_name, $file_path) {
+    global $conf;
+
+    dol_syslog("DEBUG_AI_ISSUE: Starting direct AI processing for " . $file_name, LOG_DEBUG);
+
+    // Includi il file con le configurazioni delle richieste API
+    require_once __DIR__ . '/config/openai_api_templates.php';
+
+    $file_key = $socid . '_' . $perizia_id . '_' . $file_name;
+    $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+    // Directory per salvare le risposte AI
+    $ai_response_dir = DOL_DATA_ROOT . '/industria40/ai_responses';
+    if (!is_dir($ai_response_dir)) {
+        mkdir($ai_response_dir, 0755, true);
+    }
+
+    try {
+        // Carica la chiave API da .env (usa dotenv o semplice parsing)
+        $env_file = __DIR__ . '/.env';
+        $api_key = null;
+        if (file_exists($env_file)) {
+            $env_content = file_get_contents($env_file);
+            preg_match('/OPENAI_API_KEY\s*=\s*["\'](.*?)["\']/i', $env_content, $matches);
+            if (isset($matches[1])) {
+                $api_key = trim($matches[1]);
+                dol_syslog("DEBUG_AI_ISSUE: API key found in .env file", LOG_DEBUG);
+            }
+        }
+
+        // Prova anche a controllare la configurazione globale di Dolibarr
+        if (empty($api_key)) {
+            $api_key = !empty($conf->global->INDUSTRIA40_OPENAI_API_KEY) ? $conf->global->INDUSTRIA40_OPENAI_API_KEY : '';
+            if (!empty($api_key)) {
+                dol_syslog("DEBUG_AI_ISSUE: API key found in Dolibarr configuration", LOG_DEBUG);
+            }
+        }
+
+        if (empty($api_key)) {
+            dol_syslog("DEBUG_AI_ISSUE: OpenAI API key not found", LOG_ERR);
+            return false;
+        }
+
+        // Inizializza la richiesta all'API
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/chat/completions');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $api_key
+        ]);
+
+        // Prepara i dati della richiesta in base al tipo di file
+        if (in_array($file_extension, array('jpg', 'jpeg', 'png', 'gif'))) {
+            // Per le immagini, carica il file e convertilo in base64
+            $image_data = file_get_contents($file_path);
+            if (!$image_data) {
+                dol_syslog("DEBUG_AI_ISSUE: Failed to read image file: " . $file_path, LOG_ERR);
+                return false;
+            }
+
+            $base64_image = base64_encode($image_data);
+            dol_syslog("DEBUG_AI_ISSUE: Image converted to base64 for OpenAI API", LOG_DEBUG);
+
+            // Usa la funzione di configurazione esterna per ottenere i dati della richiesta
+            $request_data = get_image_analysis_request($file_extension, $base64_image);
+        }
+        elseif ($file_extension == 'pdf') {
+            // Per i PDF, estrai il testo se disponibile
+            $ocr_text = load_ocr_text($file_path);
+            if (empty($ocr_text)) {
+                $ocr_text = "PDF senza testo estraibile.";
+            }
+
+            // Usa la funzione di configurazione esterna per ottenere i dati della richiesta
+            $request_data = get_pdf_analysis_request($ocr_text);
+        }
+        else {
+            // Se il tipo di file non è supportato
+            dol_syslog("DEBUG_AI_ISSUE: Unsupported file type for AI analysis: " . $file_extension, LOG_WARNING);
+            return false;
+        }
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request_data));
+
+        dol_syslog("DEBUG_AI_ISSUE: Calling OpenAI API with request data from external configuration", LOG_DEBUG);
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            dol_syslog("DEBUG_AI_ISSUE: OpenAI API error: " . curl_error($ch), LOG_ERR);
+            curl_close($ch);
+            return false;
+        }
+
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($http_code != 200) {
+            dol_syslog("DEBUG_AI_ISSUE: OpenAI API returned HTTP code $http_code: " . substr($response, 0, 500), LOG_ERR);
+            return false;
+        }
+
+        $response_data = json_decode($response, true);
+        if (!isset($response_data['choices'][0]['message']['content'])) {
+            dol_syslog("DEBUG_AI_ISSUE: Invalid OpenAI API response format", LOG_ERR);
+            return false;
+        }
+
+        $ai_description = $response_data['choices'][0]['message']['content'];
+
+        // Determina se il contenuto è JSON valido
+        $is_json = false;
+        $json_response = json_decode($ai_description, true);
+        if (json_last_error() === JSON_ERROR_NONE && is_array($json_response)) {
+            $is_json = true;
+            dol_syslog("DEBUG_AI_ISSUE: Response content is valid JSON", LOG_DEBUG);
+        }
+
+        // Scegli l'estensione del file in base al contenuto
+        $response_extension = $is_json ? '.json' : '.txt';
+        $response_file = $ai_response_dir . '/' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $file_key) . $response_extension;
+        $summary_file = $ai_response_dir . '/' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $file_key) . '_summary.txt';
+
+        dol_syslog("DEBUG_AI_ISSUE: Using file extension " . $response_extension . " based on content type", LOG_DEBUG);
+
+        // Per le immagini, crea un sommario se è JSON
+        if (in_array($file_extension, array('jpg', 'jpeg', 'png', 'gif')) && $is_json) {
+            // Determina quale tipo di documento è stato identificato
+            $detected_type = '';
+            foreach (['fattura', 'preventivo', 'scheda', 'schermata', 'targhetta', 'foto'] as $type) {
+                if (isset($json_response[$type]) && !empty($json_response[$type])) {
+                    $detected_type = $type;
+                    break;
+                }
+            }
+
+            if (!empty($detected_type)) {
+                dol_syslog("DEBUG_AI_ISSUE: Document identified as: " . $detected_type, LOG_DEBUG);
+                // Usa la funzione esterna per generare il sommario
+                $summary = get_document_summary($detected_type, $json_response[$detected_type]);
+            } else {
+                // Se non è stato rilevato alcun tipo specifico
+                $summary = create_compact_summary($ai_description);
+            }
+        } else {
+            // Per i PDF o contenuti non JSON, crea un sommario standard
+            $summary = create_compact_summary($ai_description);
+        }
+
+        // Salva la risposta completa con l'estensione appropriata
+        if (file_put_contents($response_file, $ai_description)) {
+            dol_syslog("DEBUG_AI_ISSUE: AI description saved to $response_file", LOG_DEBUG);
+        } else {
+            dol_syslog("DEBUG_AI_ISSUE: Error saving AI description to $response_file", LOG_ERR);
+            return false;
+        }
+
+        // Salva il sommario sempre come .txt
+        if (file_put_contents($summary_file, $summary)) {
+            dol_syslog("DEBUG_AI_ISSUE: AI summary saved to $summary_file", LOG_DEBUG);
+        } else {
+            dol_syslog("DEBUG_AI_ISSUE: Error saving AI summary to $summary_file", LOG_ERR);
+        }
+
+        return true;
+    } catch (Exception $e) {
+        dol_syslog("DEBUG_AI_ISSUE: Exception in direct_process_ai_request: " . $e->getMessage(), LOG_ERR);
+        return false;
+    }
+}
+
+/**
+ * Create a compact summary from AI description
+ *
+ * @param string $description Full AI description
+ * @return string Compact summary
+ */
+function create_compact_summary($description) {
+    // Trova le informazioni chiave dal testo completo
+    $lines = explode("\n", $description);
+    $summary_lines = [];
+
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if (empty($line)) continue;
+
+        // Mantieni solo le righe che sembrano contenere informazioni chiave
+        if (strpos($line, ':') !== false || strlen($line) < 100) {
+            $summary_lines[] = $line;
+        }
+    }
+
+    // Limita a max 10 righe
+    if (count($summary_lines) > 10) {
+        $summary_lines = array_slice($summary_lines, 0, 10);
+    }
+
+    // Aggiungi una riga finale con un link alla descrizione completa
+    $summary_lines[] = "Nota: Questa è una sintesi. Clicca su 'Visualizza dettagli AI' per la descrizione completa.";
+
+    return implode("\n", $summary_lines);
 }

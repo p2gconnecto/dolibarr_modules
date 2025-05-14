@@ -23,6 +23,7 @@ if (!$res) die('Error: Failed to include Dolibarr main.inc.php file');
 
 require_once DOL_DOCUMENT_ROOT . '/core/lib/files.lib.php';
 require_once __DIR__ . '/lib/industria40.lib.php';
+require_once __DIR__ . '/config/openai_api_templates.php'; // Include the new configuration file
 
 // Controllo sicurezza - solo utenti autenticati
 if (!$user->rights->industria40->read && !$user->admin) {
@@ -65,6 +66,18 @@ if ($ai_description !== false) {
 $openai_api_key = getenv('OPENAI_API_KEY');
 if (empty($openai_api_key)) $openai_api_key = !empty($conf->global->INDUSTRIA40_OPENAI_API_KEY) ? $conf->global->INDUSTRIA40_OPENAI_API_KEY : '';
 
+// Aggiungi questo blocco per verificare l'esistenza del riepilogo compatto
+$ai_description_summary_compact = get_stored_ai_response($file_key . '_summary_compact');
+if ($ai_description_summary_compact === false && $ai_description !== false) {
+    // Se esiste la descrizione AI ma non il riepilogo compatto, crealo
+    writeToLog("Creating compact summary from existing AI description", $file_key);
+    $compact_summary = create_compact_summary_from_description($file_key);
+    if (!empty($compact_summary)) {
+        store_ai_response($file_key . '_summary_compact', $compact_summary);
+        writeToLog("Compact summary created successfully", $file_key);
+    }
+}
+
 if (empty($openai_api_key)) {
     echo json_encode(['status' => 'error', 'message' => 'OpenAI API key non configurata']);
     writeToLog("AI description generation failed: OpenAI API key not configured", $file_key);
@@ -78,108 +91,16 @@ if (in_array($file_extension, array('jpg', 'jpeg', 'png', 'gif')) && file_exists
         $base64_image = base64_encode($image_data);
         writeToLog("Image converted to base64 for OpenAI API", $file_key);
 
-        // OpenAI API call
+        // OpenAI API call - using the external configuration
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/chat/completions');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Authorization: Bearer ' . $openai_api_key]);
-        $request_data = [
-            'model' => 'gpt-4o',
-            'messages' => [
-                [
-                    'role' => 'user',
-                    'content' => [
-                        [
-                            'type' => 'text',
-                            'text' => 'Analizza questa immagine e estrai tutte le informazioni testuali e visive rilevanti. '
-                                . 'Restituisci la risposta in formato JSON strutturato seguendo esattamente uno dei modelli forniti, '
-                                . 'riempiendo i campi appropriati. Seleziona il modello più adatto basandoti sul tipo di contenuto '
-                                . 'dell\'immagine (fattura, preventivo, scheda tecnica, schermata, targhetta identificativa o foto generica).'
-                                . "\n\nModello JSON da utilizzare (scegli il più appropriato):\n"
-                                . '```json
-{
-  "fattura": {
-    "numero": "",
-    "data": "",
-    "emettitore": "",
-    "piva_emettitore": "",
-    "destinatario": "",
-    "piva_destinatario": "",
-    "prodotti": [
-      {
-        "descrizione": "",
-        "quantita": 0,
-        "prezzo_unitario": 0.00,
-        "totale": 0.00
-      }
-    ],
-    "totale_documento": 0.00
-  },
-  "preventivo": {
-    "numero": "",
-    "data": "",
-    "emettitore": "",
-    "piva_emettitore": "",
-    "destinatario": "",
-    "piva_destinatario": "",
-    "prodotti": [
-      {
-        "descrizione": "",
-        "quantita": 0,
-        "prezzo_unitario": 0.00,
-        "totale": 0.00
-      }
-    ],
-    "totale_documento": 0.00
-  },
-  "scheda": {
-    "marca": "",
-    "modello": "",
-    "descrizione": "",
-    "funzionalita_principali": [],
-    "dati_tecnici": {
-      "dimensioni": "",
-      "peso": "",
-      "alimentazione": "",
-      "connettivita": "",
-      "sensori": []
-    }
-  },
-  "schermata": {
-    "sorgente": "",
-    "url_o_indirizzo_ip": "",
-    "timestamp": "",
-    "tipo_dato": ""
-  },
-  "targhetta": {
-    "marca": "",
-    "modello_o_tipo": "",
-    "matricola": "",
-    "anno_costruzione": "",
-    "omologazione": ""
-  },
-  "foto": {
-    "tipo": "",
-    "contesto": "",
-    "annotazioni_visive": ""
-  }
-}```
-'
-                                . 'Fornisci solo il JSON appropriato compilato con i dati che riesci a identificare dall\'immagine, senza commenti o testo aggiuntivo.'
-                        ],
-                        [
-                            'type' => 'image_url',
-                            'image_url' => [
-                                'url' => 'data:image/'.$file_extension.';base64,'.$base64_image
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            'max_tokens' => 1000,
-            'response_format' => ['type' => 'json_object']
-        ];
+
+        // Get request data from external configuration file
+        $request_data = get_image_analysis_request($file_extension, $base64_image);
+
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request_data));
         writeToLog("Sending async request to OpenAI API", $file_key);
         $response_api = curl_exec($ch);
@@ -212,45 +133,8 @@ if (in_array($file_extension, array('jpg', 'jpeg', 'png', 'gif')) && file_exists
                         // Salviamo sia il JSON completo che una versione formattata per la visualizzazione
                         store_ai_response($file_key, $description_text);
 
-                        // Creiamo un testo di riepilogo per la visualizzazione
-                        $summary = "Tipo documento: " . ucfirst($detected_type) . "\n";
-
-                        // Aggiungiamo informazioni in base al tipo di documento
-                        switch ($detected_type) {
-                            case 'fattura':
-                            case 'preventivo':
-                                $doc = $json_response[$detected_type];
-                                $summary .= "Numero: " . ($doc['numero'] ?? 'N/D') . "\n";
-                                $summary .= "Data: " . ($doc['data'] ?? 'N/D') . "\n";
-                                $summary .= "Emesso da: " . ($doc['emettitore'] ?? 'N/D') . "\n";
-                                $summary .= "A favore di: " . ($doc['destinatario'] ?? 'N/D') . "\n";
-                                $summary .= "Totale: " . ($doc['totale_documento'] ?? 'N/D') . "€\n";
-                                break;
-                            case 'scheda':
-                                $doc = $json_response[$detected_type];
-                                $summary .= "Marca: " . ($doc['marca'] ?? 'N/D') . "\n";
-                                $summary .= "Modello: " . ($doc['modello'] ?? 'N/D') . "\n";
-                                $summary .= "Descrizione: " . ($doc['descrizione'] ?? 'N/D') . "\n";
-                                break;
-                            case 'targhetta':
-                                $doc = $json_response[$detected_type];
-                                $summary .= "Marca: " . ($doc['marca'] ?? 'N/D') . "\n";
-                                $summary .= "Modello: " . ($doc['modello_o_tipo'] ?? 'N/D') . "\n";
-                                $summary .= "Matricola: " . ($doc['matricola'] ?? 'N/D') . "\n";
-                                $summary .= "Anno: " . ($doc['anno_costruzione'] ?? 'N/D') . "\n";
-                                break;
-                            case 'schermata':
-                                $doc = $json_response[$detected_type];
-                                $summary .= "Sorgente: " . ($doc['sorgente'] ?? 'N/D') . "\n";
-                                $summary .= "URL/IP: " . ($doc['url_o_indirizzo_ip'] ?? 'N/D') . "\n";
-                                break;
-                            case 'foto':
-                                $doc = $json_response[$detected_type];
-                                $summary .= "Tipo: " . ($doc['tipo'] ?? 'N/D') . "\n";
-                                $summary .= "Contesto: " . ($doc['contesto'] ?? 'N/D') . "\n";
-                                $summary .= "Note: " . ($doc['annotazioni_visive'] ?? 'N/D') . "\n";
-                                break;
-                        }
+                        // Use the external function to generate the summary
+                        $summary = get_document_summary($detected_type, $json_response[$detected_type]);
 
                         // Salviamo anche la versione di riepilogo per visualizzazione
                         store_ai_response($file_key . '_summary', $summary);

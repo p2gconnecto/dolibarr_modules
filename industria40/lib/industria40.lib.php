@@ -87,3 +87,50 @@ function process_uploaded_file($file_path, $socid, $periziaid_sanitized) {
 
     // Add other processing steps as needed (OCR, AI analysis, etc.)
 }
+
+/**
+ * Crea un riepilogo compatto a partire dalla descrizione AI esistente
+ *
+ * @param string $file_key Chiave del file
+ * @return string Riepilogo compatto
+ */
+function create_compact_summary_from_description($file_key) {
+    // Ottieni la descrizione completa
+    $description = get_stored_ai_response($file_key);
+    if ($description === false) {
+        return '';
+    }
+
+    // Ottieni il riepilogo standard
+    $summary = get_stored_ai_response($file_key . '_summary');
+    if ($summary === false) {
+        return '';
+    }
+
+    // Crea una versione compatta del riepilogo
+    $compact_summary = '';
+    $summary_lines = explode("\n", $summary);
+
+    // Estrai solo le prime 3-4 righe più importanti
+    $count = 0;
+    foreach ($summary_lines as $line) {
+        if (empty(trim($line))) continue;
+
+        // Includi le righe più significative
+        if (preg_match('/^Tipo documento|Numero|Data|Marca|Modello|Matricola|Emesso da|Totale|Descrizione/i', $line)) {
+            $compact_summary .= $line . "\n";
+            $count++;
+        }
+
+        // Limita a massimo 4 righe
+        if ($count >= 4) break;
+    }
+
+    // Se non abbiamo abbastanza informazioni, prendi semplicemente le prime righe
+    if ($count < 2 && count($summary_lines) > 0) {
+        $compact_summary = $summary_lines[0] . "\n";
+        if (isset($summary_lines[1])) $compact_summary .= $summary_lines[1] . "\n";
+    }
+
+    return trim($compact_summary);
+}

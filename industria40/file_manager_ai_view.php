@@ -732,3 +732,24 @@ if (!empty($ocr_text_content)) {
     }
     print '</div>';
 }
+
+// In file_manager_ai_view.php, dove mostri il riepilogo AI
+
+// Prima controlla se esiste il riepilogo compatto
+$ai_description_summary_compact = get_stored_ai_response($file_key_ai . '_summary_compact');
+if ($ai_description_summary_compact === false && $ai_description !== false) {
+    // Crea il riepilogo compatto se non esiste ma la descrizione sì
+    $compact_summary = create_compact_summary_from_description($file_key_ai);
+    if (!empty($compact_summary)) {
+        store_ai_response($file_key_ai . '_summary_compact', $compact_summary);
+    }
+    $ai_description_summary_compact = $compact_summary;
+}
+
+// Visualizza il riepilogo compatto
+if ($ai_description_summary_compact !== false) {
+    print '<div class="ai-summary-compact info-box">';
+    print '<h5><i class="fas fa-robot"></i> ' . $langs->trans("AIQuickSummary") . '</h5>';
+    print '<div class="info-content">' . nl2br(dol_escape_htmltag($ai_description_summary_compact)) . '</div>';
+    print '</div>';
+}

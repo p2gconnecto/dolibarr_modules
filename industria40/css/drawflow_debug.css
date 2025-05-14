@@ -1,0 +1,90 @@
+/* Stili specifici per i nodi debug di DrawflowManager */
+
+.debug-node {
+    background-color: #f8f9fa;
+    border: 2px solid #343a40;
+    padding: 10px;
+}
+
+.master-debug-node {
+    background-color: #e3f2fd;
+    border: 3px solid #1976D2;
+    min-width: 400px !important;
+    min-height: 350px !important;
+    width: 400px !important;
+}
+
+.master-debug-node .debug-node-title {
+    background-color: #1976D2;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.master-debug-node .debug-values {
+    max-height: 280px !important;
+    overflow-y: auto;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.master-debug-node .debug-description {
+    font-size: 13px;
+    margin: 10px 0;
+    padding: 5px;
+    background-color: #e8f5e9;
+    border-radius: 4px;
+    border-left: 3px solid #4caf50;
+}
+
+.debug-value-item {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.debug-value-key {
+    font-weight: bold;
+    color: #1976D2;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.debug-value-path {
+    font-size: 12px;
+    color: #666;
+    margin-left: 5px;
+}
+
+.debug-value-source {
+    color: #666;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.debug-value-content {
+    background: #fff;
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-top: 5px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 13px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.json-content {
+    font-family: monospace;
+    background-color: #f8f9fa;
+}
+
+.resized {
+    transition: all 0.3s ease;
+}

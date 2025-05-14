@@ -134,3 +134,4 @@ PeriziaAdded=Perizia %s aggiunta con successo
 ErrorFailedToAddPerizia=Errore durante l'aggiunta della perizia
 ErrorFetchingPerizie=Errore durante il recupero delle perizie
 FileManagerForPerizia=Gestore File per Perizia %s
+AIDescriptionGenerationStarted=Avviata la generazione di descrizioni AI per %s file. La pagina si aggiornerà automaticamente.

@@ -2,29 +2,21 @@
 require '../../main.inc.php';
 require_once DOL_DOCUMENT_ROOT.'/societe/class/societe.class.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formcompany.class.php';
-dol_syslog("industria40index.php: Loading Yurij's file manager 001", LOG_DEBUG);
 
 // Assuming a class for Perizia exists or will be created
 // require_once __DIR__.'/class/perizia.class.php';
 
 // Aggiungi l'inizializzazione del modulo
 require_once DOL_DOCUMENT_ROOT . '/custom/industria40/core/init.inc.php';
-dol_syslog("industria40index.php: Loading Yurij's file manager 002", LOG_DEBUG);
 // Include the new functions file
 //require_once DOL_DOCUMENT_ROOT . '/custom/industria40/file_manager.php'; // CORRETTO: Percorso assoluto completo
 require_once DOL_DOCUMENT_ROOT . '/custom/industria40/file_manager_functions.php'; // CORRETTO: Percorso assoluto completo
 
-dol_syslog("industria40index.php: Loading Yurij's file manager 004", LOG_DEBUG);
 
 // Ensure $langs is loaded for the main page
 $langs->loadLangs(array("companies", "users", "industria40@industria40", "file_manager@industria40"));
 
 // --- Debugging GET and POST data ---
-dol_syslog("industria40index.php: Raw GET data: " . print_r($_GET, true), LOG_DEBUG);
-dol_syslog("industria40index.php: Raw POST data: " . print_r($_POST, true), LOG_DEBUG);
-dol_syslog("industria40index.php: Request Method: " . $_SERVER['REQUEST_METHOD'], LOG_DEBUG);
-dol_syslog("industria40index.php: HTTP_REFERER: " . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'Not set'), LOG_DEBUG);
-dol_syslog("industria40index.php: Full _REQUEST: " . print_r($_REQUEST, true), LOG_DEBUG);
 
 $socid = GETPOSTINT('socid');
 $periziaid = GETPOSTINT('periziaid');
@@ -70,10 +62,11 @@ if ($action == 'addperizia' && !empty(GETPOST('ref', 'alpha')) && GETPOSTINT('so
 }
 
 // Aggiungi controlli aggiuntivi per il debugging
+/*
 dol_syslog("industria40index.php: Script execution started", LOG_DEBUG);
 dol_syslog("industria40index.php: PHP version: " . PHP_VERSION, LOG_DEBUG);
 dol_syslog("industria40index.php: Server software: " . (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : 'Unknown'), LOG_DEBUG);
-
+*/
 try {
     llxHeader('', $langs->trans('Industria40FileManager'));
     dol_syslog("industria40index.php: After llxHeader call", LOG_DEBUG);
@@ -121,14 +114,7 @@ try {
         print '<br>';
     }
 
-    // --- Debugging socid before Mode Handling ---
-    dol_syslog("industria40index.php: Debugging before Mode Handling: socid value = " . $socid, LOG_DEBUG);
-    dol_syslog("industria40index.php: Debugging before Mode Handling: socid type = " . gettype($socid), LOG_DEBUG);
-    if (is_numeric($socid)) {
-        dol_syslog("industria40index.php: Debugging before Mode Handling: socid is numeric. intval(socid) = " . intval($socid), LOG_DEBUG);
-    } else {
-        dol_syslog("industria40index.php: Debugging before Mode Handling: socid is NOT numeric.", LOG_DEBUG);
-    }
+
 
     // --- Mode Handling ---
     if ($socid > 0) {
@@ -301,3 +287,49 @@ try {
 if (!empty($db) && $db->connected) {
     $db->close();
 }
+?>
+<script>
+// Sistema migliorato per garantire che l'inizializzazione avvenga solo quando DrawflowManager è pronto
+(function() {
+    // Inizializza la coda dei callback se non esiste
+    if (!window.DrawflowManagerCallbacks) {
+        window.DrawflowManagerCallbacks = [];
+    }
+
+    // Definisci la funzione di callback per quando DrawflowManager è pronto
+    // Usiamo un flag per evitare chiamate multiple
+    var callbackCalled = false;
+    function readyCallback() {
+        // Previeni chiamate multiple
+        if (callbackCalled) return;
+        callbackCalled = true;
+
+        console.log("DrawflowManager è pronto! [" + new Date().toISOString() + "]");
+
+        // Utilizziamo il drawflowConfig globale già definito nella pagina
+        if (window.drawflowConfig) {
+            console.log("Inizializzazione DrawflowManager con configurazione");
+            DrawflowManager.init(window.drawflowConfig);
+        } else {
+            console.error("Configurazione DrawflowManager non trovata!");
+        }
+    }
+
+    // Se DrawflowManager è già pronto, chiamiamo subito il callback
+    if (window.DrawflowManager && window.DrawflowManager.isReady === true) {
+        console.log("DrawflowManager già pronto, inizializzazione immediata");
+        // Usa setTimeout per evitare ricorsione
+        setTimeout(readyCallback, 0);
+    }
+    // Altrimenti, aggiungiamo il nostro callback alla coda
+    else {
+        console.log("DrawflowManager non ancora pronto, callback messo in coda");
+        window.DrawflowManagerCallbacks.push(readyCallback);
+
+        // Impostiamo onDrawflowManagerReady come backup, ma solo se non è già definito
+        if (!window.onDrawflowManagerReady) {
+            window.onDrawflowManagerReady = readyCallback;
+        }
+    }
+})();
+</script>
